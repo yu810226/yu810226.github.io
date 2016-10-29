@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="UNIX Programming," />
 
 
 
@@ -84,12 +84,31 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="這一章繼上一章談 regular files 的 I/O 操作，像是開檔、讀寫檔以外，討論了檔案系統及檔案的其他特性。
+簡介檔名####避免使用一些特殊符號命名
+避免使用：* ? &amp;gt; &amp;lt; ; &amp;amp; ! [ ] | \ ‘ “ ` ( ) { }
+下option時，會使用-，所以也不建議使用-開頭命名檔案
+此外，.開頭的檔案為隱藏檔
+####每一個檔案或目錄的檔名最長可以到達 25">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Advanced UNIX Programming--Ch4">
+<meta property="og:url" content="http://yoursite.com/2016/10/29/Advanced-UNIX-Programming-Ch4/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="這一章繼上一章談 regular files 的 I/O 操作，像是開檔、讀寫檔以外，討論了檔案系統及檔案的其他特性。
+簡介檔名####避免使用一些特殊符號命名
+避免使用：* ? &amp;gt; &amp;lt; ; &amp;amp; ! [ ] | \ ‘ “ ` ( ) { }
+下option時，會使用-，所以也不建議使用-開頭命名檔案
+此外，.開頭的檔案為隱藏檔
+####每一個檔案或目錄的檔名最長可以到達 25">
+<meta property="og:updated_time" content="2016-10-29T11:42:40.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="Advanced UNIX Programming--Ch4">
+<meta name="twitter:description" content="這一章繼上一章談 regular files 的 I/O 操作，像是開檔、讀寫檔以外，討論了檔案系統及檔案的其他特性。
+簡介檔名####避免使用一些特殊符號命名
+避免使用：* ? &amp;gt; &amp;lt; ; &amp;amp; ! [ ] | \ ‘ “ ` ( ) { }
+下option時，會使用-，所以也不建議使用-開頭命名檔案
+此外，.開頭的檔案為隱藏檔
+####每一個檔案或目錄的檔名最長可以到達 25">
 
 
 
@@ -110,9 +129,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/10/29/Advanced-UNIX-Programming-Ch4/"/>
 
-  <title> Hexo </title>
+  <title> Advanced UNIX Programming--Ch4 | Hexo </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="">
@@ -133,9 +152,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -212,9 +229,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -234,112 +251,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/10/29/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-10-29T19:42:41+08:00" content="2016-10-29">
-              2016-10-29
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/29/Advanced-UNIX-Programming-Ch4/" itemprop="url">
-                  Advanced UNIX Programming--Ch4
-                </a>
+                Advanced UNIX Programming--Ch4
               
             
           </h1>
@@ -379,144 +291,70 @@
       
 
       
-        
-          
-            <p>這一章繼上一章談 regular files 的 I/O 操作，像是開檔、讀寫檔以外，討論了檔案系統及檔案的其他特性。</p>
+        <p>這一章繼上一章談 regular files 的 I/O 操作，像是開檔、讀寫檔以外，討論了檔案系統及檔案的其他特性。</p>
 <h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><h3 id="檔名"><a href="#檔名" class="headerlink" title="檔名"></a>檔名</h3><p>####避免使用一些特殊符號命名</p>
 <p>避免使用：* ? &gt; &lt; ; &amp; ! [ ] | \ ‘ “ ` ( ) { }</p>
 <p>下option時，會使用-，所以也不建議使用-開頭命名檔案</p>
 <p>此外，.開頭的檔案為隱藏檔</p>
 <p>####每一個檔案或目錄的檔名最長可以到達 255 個字元（PATH_MAX constant）</p>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/16/How-to-run-find-with-exec/" itemprop="url">
-                  How to run find with -exec
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-10-16T15:59:46+08:00" content="2016-10-16">
-              2016-10-16
-            </time>
-          </span>
-
+        <div class="post-tags">
           
-
-          
-            
-          
-
-          
-
-          
-          
-
+            <a href="/tags/UNIX-Programming/" rel="tag">#UNIX Programming</a>
           
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>UNIX allows users to pipe each utility’s output to another utility’s input to accomplish complicated tasks.</p>
-<h3 id="Find-command-with-exec"><a href="#Find-command-with-exec" class="headerlink" title="Find command with -exec"></a>Find command with -exec</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ find . -name <span class="string">'*.txt'</span> -exec grep -i apple &#123;&#125; \;</div></pre></td></tr></table></figure>
-<p>We first find txt file in this directory. Then, execute grep and substitute {} with the results we just found. That is, the filenames.</p>
-<h3 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">I like to eat apples.</div></pre></td></tr></table></figure>
-<p>If we want to display the filename the matched lines are in, we can change the command above to</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ find . -name <span class="string">'*.txt'</span> -exec grep -i apple &#123;&#125; +;</div></pre></td></tr></table></figure>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/16/How-to-run-find-with-exec/" rel="next" title="How to run find with -exec">
+                <i class="fa fa-chevron-left"></i> How to run find with -exec
+              </a>
+            
+          </div>
 
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/29/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -524,6 +362,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -543,8 +385,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -587,6 +438,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#簡介"><span class="nav-number">1.</span> <span class="nav-text">簡介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#檔名"><span class="nav-number">1.1.</span> <span class="nav-text">檔名</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -683,6 +545,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
