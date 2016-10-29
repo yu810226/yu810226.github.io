@@ -280,7 +280,7 @@
         
           
             <p>這一章繼上一章談 regular files 的 I/O 操作，像是開檔、讀寫檔以外，討論了檔案系統及檔案的其他特性。</p>
-<h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><h3 id="檔名"><a href="#檔名" class="headerlink" title="檔名"></a>檔名</h3><blockquote>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><h3 id="檔名"><a href="#檔名" class="headerlink" title="檔名"></a>檔名</h3><blockquote>
 <h4 id="避免使用一些特殊符號命名"><a href="#避免使用一些特殊符號命名" class="headerlink" title="避免使用一些特殊符號命名"></a>避免使用一些特殊符號命名</h4><ul>
 <li><p>避免使用：* ? &gt; &lt; ; &amp; ! [ ] | \ ‘ “ ` ( ) { }</p>
 </li>
@@ -302,7 +302,7 @@
 <li>Home Directory: 當使用者log in後初始的 working directory (來自 /etc/passwd)</li>
 </ul>
 </blockquote>
-<h2 id="檔案資訊"><a href="#檔案資訊" class="headerlink" title="檔案資訊"></a>檔案資訊</h2><h3 id="stat-lstat-fstat-fstatat"><a href="#stat-lstat-fstat-fstatat" class="headerlink" title="stat, lstat, fstat, fstatat"></a>stat, lstat, fstat, fstatat</h3><blockquote>
+<h2 id="File-Info"><a href="#File-Info" class="headerlink" title="File Info"></a>File Info</h2><h3 id="stat-lstat-fstat-fstatat"><a href="#stat-lstat-fstat-fstatat" class="headerlink" title="stat, lstat, fstat, fstatat"></a>stat, lstat, fstat, fstatat</h3><blockquote>
 <ul>
 <li>stat 和 lstat  基本上是相等的，只是 當檔案是一個 symbolic link 時，lstat 會回傳 symbolic link 資訊，而非 symbolic link 指到的檔案；stat 會回傳 symbolic link 指到的檔案的資訊</li>
 </ul>
@@ -340,7 +340,38 @@
 <li>Symbolic link</li>
 </ul>
 </blockquote>
-
+<h2 id="File-Permissions"><a href="#File-Permissions" class="headerlink" title="File Permissions"></a>File Permissions</h2><h3 id="UIDs-和-GIDs"><a href="#UIDs-和-GIDs" class="headerlink" title="UIDs 和 GIDs"></a>UIDs 和 GIDs</h3><blockquote>
+<p>由於帳號的比對過於麻煩，所以實際上 UNIX 系統只記錄相對應該帳號的 id 數字來進行登入後的操作(在 /etc/passwd 中)。可以使用 id 指令來查看在系統中的帳號的 UID 和 GIDs</p>
+<p>More info: <a href="http://linux.vbird.org/linux_basic/0410accountmanager.php#account_id" target="_blank" rel="external">使用者識別碼： UID 與 GID</a></p>
+<h4 id="每個-process-都會有的-UIDs-和-GIDs"><a href="#每個-process-都會有的-UIDs-和-GIDs" class="headerlink" title="每個 process 都會有的 UIDs 和 GIDs"></a>每個 process 都會有的 UIDs 和 GIDs</h4><ul>
+<li>Real user ID and real group ID：來自 /etc/passwd</li>
+<li>Effective user ID and effective group ID：檢查檔案存取權限<blockquote>
+<p>一般而言與real user ID 和 effective group ID 相等，但可被執行中的程式用 setuid(2) 或 setgid(2)設定。</p>
+</blockquote>
+</li>
+<li>Saved set-user-ID and saved set-group-ID：exec<blockquote>
+<p>passwd 便是一個 set-user-ID 的程式<br>More info: <a href="http://linux.vbird.org/linux_basic/0410accountmanager.php#account_user" target="_blank" rel="external">/etc/passwd 和 /etc/shadow</a></p>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+<h3 id="檔案存取權限"><a href="#檔案存取權限" class="headerlink" title="檔案存取權限"></a>檔案存取權限</h3><blockquote>
+<h4 id="9-bit-permissions"><a href="#9-bit-permissions" class="headerlink" title="9-bit permissions"></a>9-bit permissions</h4><ul>
+<li>user-read, user-write, user-execute</li>
+<li>group-read, group-write, group-execute</li>
+<li>other-read, other-write, other-execute<br>要刪除一個存在的檔案，我們需要有該檔案所在目錄寫和執行的權限</li>
+</ul>
+<h4 id="EUID-判斷是否能存取檔案是循著一定順序，sequential-決定的"><a href="#EUID-判斷是否能存取檔案是循著一定順序，sequential-決定的" class="headerlink" title="EUID 判斷是否能存取檔案是循著一定順序，sequential 決定的"></a>EUID 判斷是否能存取檔案是循著一定順序，sequential 決定的</h4></blockquote>
+<h3 id="新檔案和目錄的所有權"><a href="#新檔案和目錄的所有權" class="headerlink" title="新檔案和目錄的所有權"></a>新檔案和目錄的所有權</h3><blockquote>
+<h4 id="新檔案的-UID-是被設定為創建這個檔案的-process-的-EUID"><a href="#新檔案的-UID-是被設定為創建這個檔案的-process-的-EUID" class="headerlink" title="新檔案的 UID 是被設定為創建這個檔案的 process 的 EUID"></a>新檔案的 UID 是被設定為創建這個檔案的 process 的 EUID</h4><h4 id="新檔案的-GID-則是視作業系統，可能由以下兩種方式決定："><a href="#新檔案的-GID-則是視作業系統，可能由以下兩種方式決定：" class="headerlink" title="新檔案的 GID 則是視作業系統，可能由以下兩種方式決定："></a>新檔案的 GID 則是視作業系統，可能由以下兩種方式決定：</h4><ul>
+<li>創建這個檔案的 process 的 EGID</li>
+<li>父目錄的 GID<blockquote>
+<p>Linux 是由 mount option (grpid) 來決定，若 grpid 被設定或是目錄有 SGID，則該檔案的 GID 是父目錄的 GID；否則是創建這個檔案的 process 的 EGID<br>FreeBSD 5.2.1/Mac OS X 10.3，該檔案的 GID 是父目錄的 GID</p>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+<h2 id="File-Systems"><a href="#File-Systems" class="headerlink" title="File Systems"></a>File Systems</h2><h2 id="Directory-OperaIons"><a href="#Directory-OperaIons" class="headerlink" title="Directory OperaIons"></a>Directory OperaIons</h2><h2 id="Device-Special-Files"><a href="#Device-Special-Files" class="headerlink" title="Device Special Files"></a>Device Special Files</h2>
           
         
       
