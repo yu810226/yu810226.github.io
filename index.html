@@ -344,8 +344,8 @@
 <p>由於帳號的比對過於麻煩，所以實際上 UNIX 系統只記錄相對應該帳號的 id 數字來進行登入後的操作(在 /etc/passwd 中)。可以使用 id 指令來查看在系統中的帳號的 UID 和 GIDs</p>
 <p>More info: <a href="http://linux.vbird.org/linux_basic/0410accountmanager.php#account_id" target="_blank" rel="external">使用者識別碼： UID 與 GID</a></p>
 <h4 id="每個-process-都會有的-UIDs-和-GIDs"><a href="#每個-process-都會有的-UIDs-和-GIDs" class="headerlink" title="每個 process 都會有的 UIDs 和 GIDs"></a>每個 process 都會有的 UIDs 和 GIDs</h4><ul>
-<li>Real user ID and real group ID：來自 /etc/passwd</li>
-<li>Effective user ID and effective group ID：檢查檔案存取權限<blockquote>
+<li>Real user ID and real group ID：來自 /etc/passwd，代表檔案的 owner</li>
+<li>Effective user ID and effective group ID：檢查檔案存取權限，代表 process 的存取權限<blockquote>
 <p>一般而言與real user ID 和 effective group ID 相等，但可被執行中的程式用 setuid(2) 或 setgid(2)設定。</p>
 </blockquote>
 </li>
@@ -357,21 +357,58 @@
 </blockquote>
 <h3 id="檔案存取權限"><a href="#檔案存取權限" class="headerlink" title="檔案存取權限"></a>檔案存取權限</h3><blockquote>
 <h4 id="9-bit-permissions"><a href="#9-bit-permissions" class="headerlink" title="9-bit permissions"></a>9-bit permissions</h4><ul>
-<li>user-read, user-write, user-execute</li>
+<li>user-read, user-write, user-execute （這裡的user，即指檔案的所有者）</li>
 <li>group-read, group-write, group-execute</li>
-<li>other-read, other-write, other-execute<br>要刪除一個存在的檔案，我們需要有該檔案所在目錄寫和執行的權限</li>
+<li>other-read, other-write, other-execute<br>要刪除/創建一個存在的檔案，我們需要有該檔案所在目錄寫和執行的權限</li>
 </ul>
-<h4 id="EUID-判斷是否能存取檔案是循著一定順序，sequential-決定的"><a href="#EUID-判斷是否能存取檔案是循著一定順序，sequential-決定的" class="headerlink" title="EUID 判斷是否能存取檔案是循著一定順序，sequential 決定的"></a>EUID 判斷是否能存取檔案是循著一定順序，sequential 決定的</h4></blockquote>
+<h4 id="EUID-判斷是否能存取檔案是循著一定順序，sequential-決定的"><a href="#EUID-判斷是否能存取檔案是循著一定順序，sequential-決定的" class="headerlink" title="EUID 判斷是否能存取檔案是循著一定順序，sequential 決定的"></a>EUID 判斷是否能存取檔案是循著一定順序，sequential 決定的</h4><h4 id="任何一個檔案要能被開啟，都必須擁有該檔案所在所有路徑目錄的-execute-權限"><a href="#任何一個檔案要能被開啟，都必須擁有該檔案所在所有路徑目錄的-execute-權限" class="headerlink" title="任何一個檔案要能被開啟，都必須擁有該檔案所在所有路徑目錄的 execute 權限"></a>任何一個檔案要能被開啟，都必須擁有該檔案所在所有路徑目錄的 execute 權限</h4><blockquote>
+<p>read 全縣能讓我們獲得該目錄所有的檔案的 list，但 execute 權限讓我們可以比對一個特定的檔案名字</p>
+</blockquote>
+</blockquote>
 <h3 id="新檔案和目錄的所有權"><a href="#新檔案和目錄的所有權" class="headerlink" title="新檔案和目錄的所有權"></a>新檔案和目錄的所有權</h3><blockquote>
 <h4 id="新檔案的-UID-是被設定為創建這個檔案的-process-的-EUID"><a href="#新檔案的-UID-是被設定為創建這個檔案的-process-的-EUID" class="headerlink" title="新檔案的 UID 是被設定為創建這個檔案的 process 的 EUID"></a>新檔案的 UID 是被設定為創建這個檔案的 process 的 EUID</h4><h4 id="新檔案的-GID-則是視作業系統，可能由以下兩種方式決定："><a href="#新檔案的-GID-則是視作業系統，可能由以下兩種方式決定：" class="headerlink" title="新檔案的 GID 則是視作業系統，可能由以下兩種方式決定："></a>新檔案的 GID 則是視作業系統，可能由以下兩種方式決定：</h4><ul>
 <li>創建這個檔案的 process 的 EGID</li>
 <li>父目錄的 GID<blockquote>
-<p>Linux 是由 mount option (grpid) 來決定，若 grpid 被設定或是目錄有 SGID，則該檔案的 GID 是父目錄的 GID；否則是創建這個檔案的 process 的 EGID<br>FreeBSD 5.2.1/Mac OS X 10.3，該檔案的 GID 是父目錄的 GID</p>
+<ul>
+<li>Linux 是由 mount option (grpid) 來決定，若 grpid 被設定或是目錄有 SGID，則該檔案的 GID 是父目錄的 GID，像是mkdir；否則是創建這個檔案的 process 的 EGID</li>
+<li>FreeBSD 5.2.1/Mac OS X 10.3，該檔案的 GID 是父目錄的 GID</li>
+</ul>
 </blockquote>
 </li>
 </ul>
 </blockquote>
-<h2 id="File-Systems"><a href="#File-Systems" class="headerlink" title="File Systems"></a>File Systems</h2><h2 id="Directory-OperaIons"><a href="#Directory-OperaIons" class="headerlink" title="Directory OperaIons"></a>Directory OperaIons</h2><h2 id="Device-Special-Files"><a href="#Device-Special-Files" class="headerlink" title="Device Special Files"></a>Device Special Files</h2>
+<h3 id="access"><a href="#access" class="headerlink" title="access"></a>access</h3><blockquote>
+<p>不同於剛剛提到以 process 角度，檢查 EUID 和 EGID 來決定是否有檔案的存取權限，access 這個 function 以 user （也就是 owner ）的觀點來檢查是否有檔案的存取權限。</p>
+<blockquote>
+<p>有另一個類似的 function：faccessat，但當該 function 的 flag 參數設為 AT_EACCESS 時，是以EUID 和 EGID 來決定是否有檔案的存取權限。</p>
+</blockquote>
+<p>Try: (This example is from &lt;<advanced programming="" in="" the="" unix="" environment="">&gt;, 3rd Edition )</advanced></p>
+<blockquote>
+<pre><code class="bash">$ ls <span class="_">-l</span> a.out
+-rwxrwxr-x 1 sar 15945 Nov 30 12:10 a.out
+$ ./a.out a.out
+<span class="built_in">read</span> access OK
+open <span class="keyword">for</span> reading OK
+$ ls <span class="_">-l</span> /etc/shadow
+-r-------- 1 root 1315 Jul 17 2002 /etc/shadow
+./a.out /etc/shadow
+access error <span class="keyword">for</span> /etc/shadow: Permission denied
+open error <span class="keyword">for</span> /etc/shadow: Permission denied
+sudo su -
+Password:
+$ chown root a.out
+$ chmod u+s a.out
+$ ls <span class="_">-l</span> a.out
+-rwsrwxr-x 1 root 15945 Nov 30 12:10 a.out
+$ <span class="built_in">exit</span>
+$ ./a.out /etc/shadow
+access error <span class="keyword">for</span> /etc/shadow: Permission denied
+open <span class="keyword">for</span> reading OK
+</code></pre>
+</blockquote>
+<p>判斷real user 是無法讀取 /etc/shadow，但 open 卻仍然會成功，因為以 root 身份執行  </p>
+</blockquote>
+<h3 id="umask"><a href="#umask" class="headerlink" title="umask"></a>umask</h3><h2 id="File-Systems"><a href="#File-Systems" class="headerlink" title="File Systems"></a>File Systems</h2><h2 id="Directory-OperaIons"><a href="#Directory-OperaIons" class="headerlink" title="Directory OperaIons"></a>Directory OperaIons</h2><h2 id="Device-Special-Files"><a href="#Device-Special-Files" class="headerlink" title="Device Special Files"></a>Device Special Files</h2>
           
         
       
