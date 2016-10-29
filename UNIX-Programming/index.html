@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="UNIX Programming," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -84,22 +84,13 @@
 
 
 
-<meta name="description" content="UNIX allows users to pipe each utility’s output to another utility’s input to accomplish complicated tasks.
-Find command with -exec1$ find . -name &apos;*.txt&apos; -exec grep -i apple &amp;#123;&amp;#125; \;
-We first">
-<meta property="og:type" content="article">
-<meta property="og:title" content="How to run find with -exec">
-<meta property="og:url" content="http://yoursite.com/2016/10/16/How-to-run-find-with-exec/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="UNIX Programming">
+<meta property="og:url" content="http://yoursite.com/UNIX-Programming/index.html">
 <meta property="og:site_name" content="Daily Life">
-<meta property="og:description" content="UNIX allows users to pipe each utility’s output to another utility’s input to accomplish complicated tasks.
-Find command with -exec1$ find . -name &apos;*.txt&apos; -exec grep -i apple &amp;#123;&amp;#125; \;
-We first">
-<meta property="og:updated_time" content="2016-10-29T13:54:15.000Z">
+<meta property="og:updated_time" content="2016-10-29T13:53:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="How to run find with -exec">
-<meta name="twitter:description" content="UNIX allows users to pipe each utility’s output to another utility’s input to accomplish complicated tasks.
-Find command with -exec1$ find . -name &apos;*.txt&apos; -exec grep -i apple &amp;#123;&amp;#125; \;
-We first">
+<meta name="twitter:title" content="UNIX Programming">
 
 
 
@@ -120,9 +111,15 @@ We first">
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/10/16/How-to-run-find-with-exec/"/>
+  <link rel="canonical" href="http://yoursite.com/UNIX-Programming/"/>
 
-  <title> How to run find with -exec | Daily Life </title>
+  <title>
+  
+
+  
+    UNIX Programming | Daily Life
+  
+</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -143,7 +140,7 @@ We first">
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -223,124 +220,9 @@ We first">
 
   <div id="posts" class="posts-expand">
     
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
     
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                How to run find with -exec
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-10-16T15:59:46+08:00" content="2016-10-16">
-              2016-10-16
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
+      
     
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>UNIX allows users to pipe each utility’s output to another utility’s input to accomplish complicated tasks.</p>
-<h3 id="Find-command-with-exec"><a href="#Find-command-with-exec" class="headerlink" title="Find command with -exec"></a>Find command with -exec</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ find . -name <span class="string">'*.txt'</span> -exec grep -i apple &#123;&#125; \;</div></pre></td></tr></table></figure>
-<p>We first find txt file in this directory. Then, execute grep and substitute {} with the results we just found. That is, the filenames.</p>
-<h3 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">I like to eat apples.</div></pre></td></tr></table></figure>
-<p>If we want to display the filename the matched lines are in, we can change the command above to</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ find . -name <span class="string">'*.txt'</span> -exec grep -i apple &#123;&#125; +;</div></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/UNIX-Programming/" rel="tag">#UNIX Programming</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/10/29/Advanced-UNIX-Programming-Ch4/" rel="prev" title="Advanced UNIX Programming--Ch4">
-                Advanced UNIX Programming--Ch4 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
   </div>
 
 
@@ -372,17 +254,8 @@ We first">
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -425,17 +298,6 @@ We first">
 
       </section>
 
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Find-command-with-exec"><span class="nav-number">1.</span> <span class="nav-text">Find command with -exec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Result"><span class="nav-number">2.</span> <span class="nav-text">Result</span></a></li></ol></div>
-            
-          </div>
-        </section>
       
 
     </div>
@@ -532,10 +394,6 @@ We first">
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
-
 
   
 
