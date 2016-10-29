@@ -85,11 +85,11 @@
 
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Daily Life">
 <meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Daily Life">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="Daily Life">
 
 
 
@@ -112,10 +112,10 @@
 
   <link rel="canonical" href="http://yoursite.com/"/>
 
-  <title> Hexo </title>
+  <title> Daily Life </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="">
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
 
   
 
@@ -145,7 +145,7 @@
   <div class="custom-logo-site-title">
     <a href="/"  class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <span class="site-title">Hexo</span>
+      <span class="site-title">Daily Life</span>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -172,7 +172,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -182,7 +182,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -248,7 +248,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <span class="post-meta-item-text">Posted on</span>
             <time itemprop="dateCreated" datetime="2016-10-29T19:57:55+08:00" content="2016-10-29">
               2016-10-29
             </time>
@@ -316,215 +316,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/29/Advanced-UNIX-Programming-Ch4/" itemprop="url">
-                  Advanced UNIX Programming--Ch4
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
-            <time itemprop="dateCreated" datetime="2016-10-29T19:18:06+08:00" content="2016-10-29">
-              2016-10-29
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>這一章繼上一章談 regular files 的 I/O 操作，像是開檔、讀寫檔以外，討論了檔案系統及檔案的其他特性。</p>
-<h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><h3 id="檔名"><a href="#檔名" class="headerlink" title="檔名"></a>檔名</h3><blockquote>
-<h4 id="避免使用一些特殊符號命名"><a href="#避免使用一些特殊符號命名" class="headerlink" title="避免使用一些特殊符號命名"></a>避免使用一些特殊符號命名</h4><ul>
-<li><p>避免使用：* ? &gt; &lt; ; &amp; ! [ ] | \ ‘ “ ` ( ) { }</p>
-</li>
-<li><p>下option時，會使用-，所以也不建議使用-開頭命名檔案</p>
-</li>
-<li><p>此外，.開頭的檔案為隱藏檔</p>
-</li>
-</ul>
-<h4 id="每一個檔案或目錄的檔名最長可以到達-255-個字元（PATH-MAX-constant）"><a href="#每一個檔案或目錄的檔名最長可以到達-255-個字元（PATH-MAX-constant）" class="headerlink" title="每一個檔案或目錄的檔名最長可以到達 255 個字元（PATH_MAX constant）"></a>每一個檔案或目錄的檔名最長可以到達 255 個字元（PATH_MAX constant）</h4></blockquote>
-<h3 id="路徑名"><a href="#路徑名" class="headerlink" title="路徑名"></a>路徑名</h3><blockquote>
-<h4 id="絕對路徑-vs-相對路徑"><a href="#絕對路徑-vs-相對路徑" class="headerlink" title="絕對路徑 vs. 相對路徑"></a>絕對路徑 vs. 相對路徑</h4><ul>
-<li>Absolute pathname – with a leading slash</li>
-<li>Relative pathname – without a leading slash or with a dot</li>
-</ul>
-<h4 id="每一個路徑名最長可以到達-4096-個字元"><a href="#每一個路徑名最長可以到達-4096-個字元" class="headerlink" title="每一個路徑名最長可以到達 4096 個字元"></a>每一個路徑名最長可以到達 4096 個字元</h4></blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/16/How-to-run-find-with-exec/" itemprop="url">
-                  How to run find with -exec
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
-            <time itemprop="dateCreated" datetime="2016-10-16T15:59:46+08:00" content="2016-10-16">
-              2016-10-16
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>UNIX allows users to pipe each utility’s output to another utility’s input to accomplish complicated tasks.</p>
-<h3 id="Find-command-with-exec"><a href="#Find-command-with-exec" class="headerlink" title="Find command with -exec"></a>Find command with -exec</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ find . -name <span class="string">'*.txt'</span> -exec grep -i apple &#123;&#125; \;</div></pre></td></tr></table></figure>
-<p>We first find txt file in this directory. Then, execute grep and substitute {} with the results we just found. That is, the filenames.</p>
-<h3 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">I like to eat apples.</div></pre></td></tr></table></figure>
-<p>If we want to display the filename the matched lines are in, we can change the command above to</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ find . -name <span class="string">'*.txt'</span> -exec grep -i apple &#123;&#125; +;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -559,27 +350,20 @@
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
-               alt="John Doe" />
-          <p class="site-author-name" itemprop="name">John Doe</p>
+               alt="Shelly Yu" />
+          <p class="site-author-name" itemprop="name">Shelly Yu</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
-              <span class="site-state-item-name">Artikel</span>
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">posts</span>
             </a>
           </div>
 
           
 
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Tags</span>
-              </a>
-            </div>
           
 
         </nav>
@@ -617,11 +401,11 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">Shelly Yu</span>
 </div>
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
