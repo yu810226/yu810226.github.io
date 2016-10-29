@@ -110,7 +110,7 @@
 
 
 每一個檔案或目錄的檔名最長可以到達 255 個">
-<meta property="og:updated_time" content="2016-10-29T11:56:52.000Z">
+<meta property="og:updated_time" content="2016-10-29T13:39:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Advanced UNIX Programming--Ch4">
 <meta name="twitter:description" content="這一章繼上一章談 regular files 的 I/O 操作，像是開檔、讀寫檔以外，討論了檔案系統及檔案的其他特性。
@@ -323,6 +323,50 @@
 <li>Relative pathname – without a leading slash or with a dot</li>
 </ul>
 <h4 id="每一個路徑名最長可以到達-4096-個字元"><a href="#每一個路徑名最長可以到達-4096-個字元" class="headerlink" title="每一個路徑名最長可以到達 4096 個字元"></a>每一個路徑名最長可以到達 4096 個字元</h4></blockquote>
+<h3 id="目錄"><a href="#目錄" class="headerlink" title="目錄"></a>目錄</h3><blockquote>
+<h4 id="Working-Directory-vs-Home-Directory"><a href="#Working-Directory-vs-Home-Directory" class="headerlink" title="Working Directory vs. Home Directory"></a>Working Directory vs. Home Directory</h4><ul>
+<li>Working Directory (current working directory, cwd): 每個 process 都有一個 cwd</li>
+<li>Home Directory: 當使用者log in後初始的 working directory (來自 /etc/passwd)</li>
+</ul>
+</blockquote>
+<h2 id="檔案資訊"><a href="#檔案資訊" class="headerlink" title="檔案資訊"></a>檔案資訊</h2><h3 id="stat-lstat-fstat-fstatat"><a href="#stat-lstat-fstat-fstatat" class="headerlink" title="stat, lstat, fstat, fstatat"></a>stat, lstat, fstat, fstatat</h3><blockquote>
+<ul>
+<li>stat 和 lstat  基本上是相等的，只是 當檔案是一個 symbolic link 時，lstat 會回傳 symbolic link 資訊，而非 symbolic link 指到的檔案；stat 會回傳 symbolic link 指到的檔案的資訊</li>
+</ul>
+<p>Try:</p>
+<blockquote>
+<pre><code class="bash">ls <span class="_">-l</span> /var
+</code></pre>
+</blockquote>
+<p>More info: <a href="http://stackoverflow.com/questions/3984948/man-2-stat-how-to-figure-out-if-a-file-is-a-link" target="_blank" rel="external">figure out if a file is a link</a></p>
+<ul>
+<li>fstat 會對已開的檔案做一樣的事</li>
+<li>fstatat 會依給予 flag 參數的不同而做和 stat 或 lstat 一樣的事</li>
+</ul>
+</blockquote>
+<h3 id="常見的檔案資訊"><a href="#常見的檔案資訊" class="headerlink" title="常見的檔案資訊"></a>常見的檔案資訊</h3><blockquote>
+<ul>
+<li>File type and permissions</li>
+<li>Number of hard links</li>
+<li>User ID and group ID</li>
+<li>Device number (of the containing file system)</li>
+<li>Device number for special files</li>
+<li>File size</li>
+<li>Block size and number of used blocks  </li>
+<li>Timestamps: access, modificaIon, and change</li>
+</ul>
+</blockquote>
+<h3 id="檔案類型"><a href="#檔案類型" class="headerlink" title="檔案類型"></a>檔案類型</h3><blockquote>
+<ul>
+<li>Regular file</li>
+<li>Directory file</li>
+<li>Block special file</li>
+<li>Character special file </li>
+<li>FIFO</li>
+<li>Socket</li>
+<li>Symbolic link</li>
+</ul>
+</blockquote>
 
       
     </div>
@@ -471,7 +515,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#簡介"><span class="nav-number">1.</span> <span class="nav-text">簡介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#檔名"><span class="nav-number">1.1.</span> <span class="nav-text">檔名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#避免使用一些特殊符號命名"><span class="nav-number">1.1.1.</span> <span class="nav-text">避免使用一些特殊符號命名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#每一個檔案或目錄的檔名最長可以到達-255-個字元（PATH-MAX-constant）"><span class="nav-number">1.1.2.</span> <span class="nav-text">每一個檔案或目錄的檔名最長可以到達 255 個字元（PATH_MAX constant）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路徑名"><span class="nav-number">1.2.</span> <span class="nav-text">路徑名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#絕對路徑-vs-相對路徑"><span class="nav-number">1.2.1.</span> <span class="nav-text">絕對路徑 vs. 相對路徑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#每一個路徑名最長可以到達-4096-個字元"><span class="nav-number">1.2.2.</span> <span class="nav-text">每一個路徑名最長可以到達 4096 個字元</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#簡介"><span class="nav-number">1.</span> <span class="nav-text">簡介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#檔名"><span class="nav-number">1.1.</span> <span class="nav-text">檔名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#避免使用一些特殊符號命名"><span class="nav-number">1.1.1.</span> <span class="nav-text">避免使用一些特殊符號命名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#每一個檔案或目錄的檔名最長可以到達-255-個字元（PATH-MAX-constant）"><span class="nav-number">1.1.2.</span> <span class="nav-text">每一個檔案或目錄的檔名最長可以到達 255 個字元（PATH_MAX constant）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路徑名"><span class="nav-number">1.2.</span> <span class="nav-text">路徑名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#絕對路徑-vs-相對路徑"><span class="nav-number">1.2.1.</span> <span class="nav-text">絕對路徑 vs. 相對路徑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#每一個路徑名最長可以到達-4096-個字元"><span class="nav-number">1.2.2.</span> <span class="nav-text">每一個路徑名最長可以到達 4096 個字元</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目錄"><span class="nav-number">1.3.</span> <span class="nav-text">目錄</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Working-Directory-vs-Home-Directory"><span class="nav-number">1.3.1.</span> <span class="nav-text">Working Directory vs. Home Directory</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#檔案資訊"><span class="nav-number">2.</span> <span class="nav-text">檔案資訊</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#stat-lstat-fstat-fstatat"><span class="nav-number">2.1.</span> <span class="nav-text">stat, lstat, fstat, fstatat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常見的檔案資訊"><span class="nav-number">2.2.</span> <span class="nav-text">常見的檔案資訊</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#檔案類型"><span class="nav-number">2.3.</span> <span class="nav-text">檔案類型</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
