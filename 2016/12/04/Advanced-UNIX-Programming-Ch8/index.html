@@ -103,7 +103,7 @@
 <meta property="og:image" content="http://yoursite.com/2016/12/04/Advanced-UNIX-Programming-Ch8/forkandFileSharing.png">
 <meta property="og:image" content="http://yoursite.com/2016/12/04/Advanced-UNIX-Programming-Ch8/SixexecFunctions.png">
 <meta property="og:image" content="http://yoursite.com/2016/12/04/Advanced-UNIX-Programming-Ch8/RelationshipoftheSixexec.png">
-<meta property="og:updated_time" content="2016-12-03T20:18:53.000Z">
+<meta property="og:updated_time" content="2016-12-03T20:21:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Advanced-UNIX-Programming-Ch8">
 <meta name="twitter:description" content="OverviewProcess IdenIfiers
@@ -456,12 +456,8 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> (getppid() != 1) sleep(1);</div></pre></td></tr></table></figure>
 </blockquote>
 </li>
-</ul>
-</blockquote>
-<p>&gt;</p>
+<li><p>Problem</p>
 <blockquote>
-<ul>
-<li>Problem<blockquote>
 <p>Either the parent or the child has to terminate first<br>Polling is not efficient</p>
 </blockquote>
 </li>
