@@ -100,8 +100,7 @@
 
 
 是一個非負的整數在一個 process 結束後，process ID 可以被重複使用Process ID 0 一般是 scheduler process ，又稱為 swapper （是 kernel 的一部分，是 system process）Process ID 1 一般是 init proc">
-<meta property="og:image" content="http://yoursite.com/forkandFileSharing.png">
-<meta property="og:updated_time" content="2016-12-03T18:11:28.000Z">
+<meta property="og:updated_time" content="2016-12-03T18:16:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Advanced-UNIX-Programming-Ch8">
 <meta name="twitter:description" content="OverviewProcess IdenIfiers
@@ -110,7 +109,6 @@
 
 
 是一個非負的整數在一個 process 結束後，process ID 可以被重複使用Process ID 0 一般是 scheduler process ，又稱為 swapper （是 kernel 的一部分，是 system process）Process ID 1 一般是 init proc">
-<meta name="twitter:image" content="http://yoursite.com/forkandFileSharing.png">
 
 
 
@@ -339,41 +337,7 @@
 <li><p>因為 fork function 之後常會跟著呼叫 exec，copy-on- write (COW) 技術因此出現：當記憶體被複製但未被改變，則不必要 allocate 新的記憶體</p>
 </li>
 </ul>
-<h4 id="fork-and-File-Sharing"><a href="#fork-and-File-Sharing" class="headerlink" title="fork and File Sharing"></a>fork and File Sharing</h4><p><img src="forkandFileSharing.png" alt="Alt text" title="fork and File Sharing"></p>
-<h4 id="Uses-of-fork"><a href="#Uses-of-fork" class="headerlink" title="Uses of fork"></a>Uses of fork</h4><ul>
-<li><p>When a process wants to duplicate itself</p>
-<blockquote>
-<p>The parent and child can each execute different sections of code at the same time<br>common for network servers</p>
-</blockquote>
-</li>
-<li><p>When a process wants to execute a different program</p>
-<blockquote>
-<p>common for shells</p>
-</blockquote>
-</li>
-</ul>
-</blockquote>
-<h3 id="Variants-of-fork"><a href="#Variants-of-fork" class="headerlink" title="Variants of fork"></a>Variants of fork</h3><blockquote>
-<h4 id="vfork"><a href="#vfork" class="headerlink" title="vfork"></a>vfork</h4><ul>
-<li><p>Creates a child process of the calling process without copying the address space of the parent into the child</p>
-</li>
-<li><p>Usually used when the child simply calls exec (or exit) right after the vfork</p>
-</li>
-<li><p>While the child is running and unIl it calls either exec or exit, the child runs in the address space of the parent (So if the child modifies any data, the result is undefined)</p>
-</li>
-<li><p>More efficient than use fork – no copy is beVer than some copies (i.e. COW)</p>
-</li>
-<li><p>Guarantee child run first. When the child calls exec or exit, the parent resumes. So if the child depends on further actions of the parent before calling exec or exit, deadlock occurs. </p>
-</li>
-</ul>
-<h4 id="clone"><a href="#clone" class="headerlink" title="clone"></a>clone</h4><ul>
-<li><p>Linux system calls for implemenIng fork and vfork</p>
-</li>
-<li><p>A generalized form of fork that allows the caller to control what is shared between parent and child</p>
-</li>
-</ul>
-</blockquote>
-<h2 id="Process-termination"><a href="#Process-termination" class="headerlink" title="Process termination"></a>Process termination</h2><h2 id="Program-execution"><a href="#Program-execution" class="headerlink" title="Program execution"></a>Program execution</h2>
+<h4 id="fork-and-File-Sharing"><a href="#fork-and-File-Sharing" class="headerlink" title="fork and File Sharing"></a>fork and File Sharing</h4><p></p></blockquote>
       
     </div>
 
@@ -517,7 +481,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Process-IdenIfiers"><span class="nav-number">1.1.</span> <span class="nav-text">Process IdenIfiers</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#init-program"><span class="nav-number">1.1.1.</span> <span class="nav-text">init program</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相關指令：ps"><span class="nav-number">1.1.2.</span> <span class="nav-text">相關指令：ps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相關指令：top"><span class="nav-number">1.1.3.</span> <span class="nav-text">相關指令：top</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相關指令：pstree"><span class="nav-number">1.1.4.</span> <span class="nav-text">相關指令：pstree</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#取得-process-ID-的-function"><span class="nav-number">1.1.5.</span> <span class="nav-text">取得 process ID 的 function</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Process-creation"><span class="nav-number">2.</span> <span class="nav-text">Process creation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fork"><span class="nav-number">2.1.</span> <span class="nav-text">fork</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Synopsis"><span class="nav-number">2.1.1.</span> <span class="nav-text">Synopsis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#呼叫-fork-之後"><span class="nav-number">2.1.2.</span> <span class="nav-text">呼叫 fork 之後</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fork-and-File-Sharing"><span class="nav-number">2.1.3.</span> <span class="nav-text">fork and File Sharing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Uses-of-fork"><span class="nav-number">2.1.4.</span> <span class="nav-text">Uses of fork</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Variants-of-fork"><span class="nav-number">2.2.</span> <span class="nav-text">Variants of fork</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#vfork"><span class="nav-number">2.2.1.</span> <span class="nav-text">vfork</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clone"><span class="nav-number">2.2.2.</span> <span class="nav-text">clone</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Process-termination"><span class="nav-number">3.</span> <span class="nav-text">Process termination</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Program-execution"><span class="nav-number">4.</span> <span class="nav-text">Program execution</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Process-IdenIfiers"><span class="nav-number">1.1.</span> <span class="nav-text">Process IdenIfiers</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#init-program"><span class="nav-number">1.1.1.</span> <span class="nav-text">init program</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相關指令：ps"><span class="nav-number">1.1.2.</span> <span class="nav-text">相關指令：ps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相關指令：top"><span class="nav-number">1.1.3.</span> <span class="nav-text">相關指令：top</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相關指令：pstree"><span class="nav-number">1.1.4.</span> <span class="nav-text">相關指令：pstree</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#取得-process-ID-的-function"><span class="nav-number">1.1.5.</span> <span class="nav-text">取得 process ID 的 function</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Process-creation"><span class="nav-number">2.</span> <span class="nav-text">Process creation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fork"><span class="nav-number">2.1.</span> <span class="nav-text">fork</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Synopsis"><span class="nav-number">2.1.1.</span> <span class="nav-text">Synopsis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#呼叫-fork-之後"><span class="nav-number">2.1.2.</span> <span class="nav-text">呼叫 fork 之後</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fork-and-File-Sharing"><span class="nav-number">2.1.3.</span> <span class="nav-text">fork and File Sharing</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>
