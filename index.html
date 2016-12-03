@@ -530,7 +530,7 @@
 <li><p>If a child waits until its parent terminates</p>
 <blockquote>
 <p>When its parent terminates, init will be the new parent, which has a PID of 1<br>Use getppid funcIon to check the value of ppid periodically</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; <span class="keyword">while</span> (getppid() != 1) sleep(1);</div><div class="line">&gt;&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> (getppid() != 1) sleep(1);</div></pre></td></tr></table></figure>
 </blockquote>
 </li>
 </ul>
@@ -570,8 +570,7 @@
 <p>*filename: does not contain a slash (/), filename will be searched in directories listed in the PATH variable</p>
 <p>More Info: <a href="http://sodino.com/2015/04/08/c-exec-family/" target="_blank" rel="external">exec family</a></p>
 </blockquote>
-<h3 id="system-Function"><a href="#system-Function" class="headerlink" title="system Function"></a>system Function</h3><p>&gt;</p>
-<blockquote>
+<h3 id="system-Function"><a href="#system-Function" class="headerlink" title="system Function"></a>system Function</h3><blockquote>
 <ul>
 <li>It might become a security problem if a suid/sgid program calls the system function<blockquote>
 <p>If a suid/sgid program use the system function to execute a command, the executed command has the same euid/egid as the calling process</p>
