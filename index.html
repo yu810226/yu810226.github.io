@@ -235,6 +235,659 @@
             
               
                 
+                <a class="post-title-link" href="/2016/12/04/Advanced-UNIX-Programming-Ch8/" itemprop="url">
+                  Advanced-UNIX-Programming-Ch8
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-12-04T00:39:49+08:00" content="2016-12-04">
+              2016-12-04
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><h3 id="Process-IdenIfiers"><a href="#Process-IdenIfiers" class="headerlink" title="Process IdenIfiers"></a>Process IdenIfiers</h3><blockquote>
+<ul>
+<li>每個 process 都有獨一無二的 ID</li>
+</ul>
+<blockquote>
+<p>是一個非負的整數<br>在一個 process 結束後，process ID 可以被重複使用<br>Process ID 0 一般是 scheduler process ，又稱為 swapper （是 kernel 的一部分，是 system process）<br>Process ID 1 一般是 init process ，在 bootstrap 程序的最後被 kernel invoke</p>
+</blockquote>
+<h4 id="init-program"><a href="#init-program" class="headerlink" title="init program"></a>init program</h4><ul>
+<li><p>/sbin/init</p>
+</li>
+<li><p>Bring up the system - /etc/iniVab, /etc/rc*, or /etc/events.d</p>
+</li>
+<li><p>The init process never dies</p>
+</li>
+<li><p>The parent process of all orphan processes</p>
+<blockquote>
+<p>nohup, and daemon processes</p>
+</blockquote>
+</li>
+<li><p>Several init replacements have been proposed –  Upstart, Epoch, Mudar, and systemd</p>
+</li>
+</ul>
+<h4 id="相關指令：ps"><a href="#相關指令：ps" class="headerlink" title="相關指令：ps"></a>相關指令：ps</h4><p>列出系統中當前運行的 process</p>
+<h4 id="相關指令：top"><a href="#相關指令：top" class="headerlink" title="相關指令：top"></a>相關指令：top</h4><p>顯示系統中各個 process 佔用 resource 的情況<br>取代 top 的指令：<a href="http://blog.xuite.net/tolarku/blog/66114556-htop+觀測系統的狀態+-+取代+top+指令" target="_blank" rel="external">htop</a></p>
+<h4 id="相關指令：pstree"><a href="#相關指令：pstree" class="headerlink" title="相關指令：pstree"></a>相關指令：pstree</h4><p>方便可以看到 process 間的關聯性</p>
+<h4 id="取得-process-ID-的-function"><a href="#取得-process-ID-的-function" class="headerlink" title="取得 process ID 的 function"></a>取得 process ID 的 function</h4><p>getpid, getppid, getuid, geteuid, getgid, getegid</p>
+<p>要注意的是上述 function 都不會回傳錯誤</p>
+</blockquote>
+<h2 id="Process-creation"><a href="#Process-creation" class="headerlink" title="Process creation"></a>Process creation</h2><h3 id="fork"><a href="#fork" class="headerlink" title="fork"></a>fork</h3><p>&gt;</p>
+<blockquote>
+<p>創建一個新的（child）process</p>
+<h4 id="Synopsis"><a href="#Synopsis" class="headerlink" title="Synopsis"></a>Synopsis</h4><ul>
+<li><p>pid_t fork(void);</p>
+</li>
+<li><p>Returns: 0 in child, process ID of child in parent, -1 on error</p>
+</li>
+</ul>
+<h4 id="呼叫-fork-之後"><a href="#呼叫-fork-之後" class="headerlink" title="呼叫 fork 之後"></a>呼叫 fork 之後</h4><ul>
+<li><p>child 和 parent process 都會繼續執行 fork 後的指令</p>
+</li>
+<li><p>child process 會複製 parent process 的 data space、 heap 和 stack，但並不共享這些部分的記憶體</p>
+</li>
+<li><p>child process 會和 parent process 共享 text segment的記憶體</p>
+</li>
+<li><p>因為 fork function 之後常會跟著呼叫 exec，copy-on- write (COW) 技術因此出現：當記憶體被複製但未被改變，則不必要 allocate 新的記憶體</p>
+</li>
+</ul>
+<h4 id="fork-and-File-Sharing"><a href="#fork-and-File-Sharing" class="headerlink" title="fork and File Sharing"></a>fork and File Sharing</h4><p><img src="forkandFileSharing.png" alt="Alt text" title="fork and File Sharing"></p>
+<h4 id="Uses-of-fork"><a href="#Uses-of-fork" class="headerlink" title="Uses of fork"></a>Uses of fork</h4><ul>
+<li><p>When a process wants to duplicate itself</p>
+<blockquote>
+<p>The parent and child can each execute different sections of code at the same time<br>common for network servers</p>
+</blockquote>
+</li>
+<li><p>When a process wants to execute a different program</p>
+<blockquote>
+<p>common for shells</p>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+<h3 id="Variants-of-fork"><a href="#Variants-of-fork" class="headerlink" title="Variants of fork"></a>Variants of fork</h3><p>&gt;</p>
+<blockquote>
+<h4 id="vfork"><a href="#vfork" class="headerlink" title="vfork"></a>vfork</h4><ul>
+<li><p>Creates a child process of the calling process without copying the address space of the parent into the child</p>
+</li>
+<li><p>Usually used when the child simply calls exec (or exit) right after the vfork</p>
+</li>
+<li><p>While the child is running and unIl it calls either exec or exit, the child runs in the address space of the parent (So if the child modifies any data, the result is undefined)</p>
+</li>
+<li><p>More efficient than use fork – no copy is beVer than some copies (i.e. COW)</p>
+</li>
+<li><p>Guarantee child run first. When the child calls exec or exit, the parent resumes. So if the child depends on further actions of the parent before calling exec or exit, deadlock occurs. </p>
+</li>
+</ul>
+<h4 id="clone"><a href="#clone" class="headerlink" title="clone"></a>clone</h4><ul>
+<li><p>Linux system calls for implemenIng fork and vfork</p>
+</li>
+<li><p>A generalized form of fork that allows the caller to control what is shared between parent and child</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="Process-termination"><a href="#Process-termination" class="headerlink" title="Process termination"></a>Process termination</h2><p>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;</p>
+<h2 id="Program-execution"><a href="#Program-execution" class="headerlink" title="Program execution"></a>Program execution</h2><p>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/03/Advanced-UNIX-Programming-Ch7/" itemprop="url">
+                  Advanced-UNIX-Programming-Ch7
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-12-03T18:49:04+08:00" content="2016-12-03">
+              2016-12-03
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Process-start-and-termination"><a href="#Process-start-and-termination" class="headerlink" title="Process start and termination"></a>Process start and termination</h2><h3 id="main-function"><a href="#main-function" class="headerlink" title="main function"></a>main function</h3><blockquote>
+<h4 id="Synopsis"><a href="#Synopsis" class="headerlink" title="Synopsis"></a>Synopsis</h4><p>int main(int argc, char *argv[]);</p>
+<ul>
+<li><p>argc: 來自command-line 參數的數量</p>
+</li>
+<li><p>argv: 裝著指著參數的pointer的陣列</p>
+</li>
+</ul>
+<p>當C程式被 kernel 執行的時候(其實是被其中一個 exec 函式執行），在 main function 實際上被叫起來做事前，會有一整個 start-up routine 被呼叫。<br>參考:<a href="http://www.voidcn.com/blog/vanquishedzxl/article/p-3193131.html" target="_blank" rel="external">Linux kernel 分析之二:main函数执行启动过程</a></p>
+</blockquote>
+<h3 id="Process-Termination"><a href="#Process-Termination" class="headerlink" title="Process Termination"></a>Process Termination</h3><blockquote>
+<h4 id="結束的情況有："><a href="#結束的情況有：" class="headerlink" title="結束的情況有："></a>結束的情況有：</h4><ul>
+<li><p>正常結束</p>
+<blockquote>
+<ul>
+<li>從 main return</li>
+<li>呼叫 exit</li>
+<li>呼叫 _exit 或 _Exit</li>
+<li>最後一個 thread return</li>
+<li>最後一個 thread 呼叫 pthread_exit</li>
+</ul>
+</blockquote>
+</li>
+<li><p>不正常結束</p>
+<blockquote>
+<ul>
+<li>呼叫abort</li>
+<li>收到 signal</li>
+<li>最後一個 thread cancel</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<p>上述提到的 start-up routine，當 main function return 後，會呼叫 exit 結束它（常常以assembly 寫）。</p>
+<h4 id="Exit-Functions"><a href="#Exit-Functions" class="headerlink" title="Exit Functions"></a>Exit Functions</h4><ul>
+<li><p>exit：會做清理的動作才返回 kernel，像是呼叫 fclose 關掉所有的 open stream。（這會讓所有 buffered outputdata 被寫到檔案中）</p>
+</li>
+<li><p>_exit and _Exit：直接返回 kernel</p>
+</li>
+<li><p>atexit: exit handlers</p>
+</li>
+</ul>
+<p><img src="StartandTerminationofaCProgram.png" alt="Alt text" title="Start and Termination of a C Program"></p>
+<h4 id="討論：未定義-main-function-返回-int-且未-return值的情況，會得到什麼-exit-code"><a href="#討論：未定義-main-function-返回-int-且未-return值的情況，會得到什麼-exit-code" class="headerlink" title="討論：未定義 main function 返回 int 且未 return值的情況，會得到什麼 exit code?"></a>討論：未定義 main function 返回 int 且未 return值的情況，會得到什麼 exit code?</h4><h4 id="補充：lint-指令"><a href="#補充：lint-指令" class="headerlink" title="補充：lint 指令"></a>補充：lint 指令</h4><p>標記原始碼中有疑義的部分</p>
+</blockquote>
+<h2 id="Environment-variables"><a href="#Environment-variables" class="headerlink" title="Environment variables"></a>Environment variables</h2><blockquote>
+<ul>
+<li><p>格式: name=value(＝前後皆無空白)</p>
+</li>
+<li><p>相關指令：env, export (bash)</p>
+</li>
+<li><p>在 shell 中用$來讀</p>
+</li>
+</ul>
+<h4 id="Environment-list"><a href="#Environment-list" class="headerlink" title="Environment list"></a>Environment list</h4><ul>
+<li><p>extern char **environ;</p>
+</li>
+<li><p>是一個裝著 char pointer 的陣列，其中每一個 pointer 裝著一個以 null 結尾的 C string 位址</p>
+</li>
+</ul>
+<p><img src="EnvironmentList.png" alt="Alt text" title="Environment List"></p>
+</blockquote>
+<h2 id="Memory-layout"><a href="#Memory-layout" class="headerlink" title="Memory layout"></a>Memory layout</h2><p>&gt;</p>
+<blockquote>
+<p><img src="MemoryLayout.png" alt="Alt text" title="Memory Layout of a Program"></p>
+<ul>
+<li><p>Text segment: Machine instructions</p>
+</li>
+<li><p>Initialized data segment: eg. int maxcount = 100;</p>
+</li>
+<li><p>Uninitialized data segment (bss): eg. long sum[1000];</p>
+</li>
+<li><p>Stack: Local variables, function call states</p>
+</li>
+<li><p>Heap: Dynamic allocated memory</p>
+</li>
+</ul>
+<h4 id="size-指令"><a href="#size-指令" class="headerlink" title="size 指令"></a>size 指令</h4><p>單位：byte</p>
+</blockquote>
+<h2 id="Shared-libraries"><a href="#Shared-libraries" class="headerlink" title="Shared libraries"></a>Shared libraries</h2><p>&gt;</p>
+<blockquote>
+<ul>
+<li><p>減少執行檔的 common library routine</p>
+</li>
+<li><p>Maintain 一份 library routine 在記憶體裡供所有 process reference</p>
+<blockquote>
+<p>這可能會增加一些 runtime overhead</p>
+</blockquote>
+</li>
+</ul>
+<p>程式可以使用新版的 library function 在不用 relink 到每一個用到該 libray 程式的情況下</p>
+<blockquote>
+<p>這可能會有安全性問題</p>
+</blockquote>
+<h4 id="Library-Injection"><a href="#Library-Injection" class="headerlink" title="Library Injection"></a>Library Injection</h4><ul>
+<li><p>被 shared libraries reference 的 function 可以被 overridden</p>
+</li>
+<li><p>The LD_PRELOAD environment variable </p>
+</li>
+</ul>
+<blockquote>
+<p>LD_PRELOAD=/path/to/the/injected-shared-object {program}</p>
+</blockquote>
+<ul>
+<li><p>不能和 suid/sgid 一起用</p>
+</li>
+<li><p>相關指令：file, ldd, nm, strip </p>
+</li>
+</ul>
+</blockquote>
+<h2 id="Memory-allocation"><a href="#Memory-allocation" class="headerlink" title="Memory allocation"></a>Memory allocation</h2><p>&gt;</p>
+<blockquote>
+<p>ISO C</p>
+<ul>
+<li><p>void *malloc(size_t size);</p>
+<blockquote>
+<p>初始值未定</p>
+</blockquote>
+</li>
+<li><p>void *calloc(size_t nobj, size_t size);</p>
+<blockquote>
+<p>初始值為 0</p>
+</blockquote>
+</li>
+</ul>
+<p><em>void </em>realloc(void *ptr, size_t newsize);</p>
+<blockquote>
+<p>初始值未定</p>
+</blockquote>
+<p>released by free()</p>
+<p>通常以 system call: sbrk(2) 實作</p>
+<p>以上三個記憶體皆被要在 heap，free 時記憶體並非被還給 kernel，而是保存在 malloc pool 中</p>
+<p>如果一個 process 呼叫 malloc，但沒有呼叫 free，則它的記憶體使用會繼續增長，這就稱為 leakage</p>
+<blockquote>
+<p>這可能會因過度的 paging overhead 而造成程式效能下降 </p>
+</blockquote>
+<p>#include <alloca.h></alloca.h></p>
+<ul>
+<li>void *alloca(size_t size);</li>
+</ul>
+<p>記憶體被要在stack，所以也不需在使用完後 free 掉記憶體</p>
+</blockquote>
+<h2 id="setjmp-and-longjmp"><a href="#setjmp-and-longjmp" class="headerlink" title="setjmp and longjmp"></a>setjmp and longjmp</h2><p>&gt;</p>
+<blockquote>
+<p>因為 goto 只能被用在同一個 function 中，我們必須有 setjmp 和 longjmp 來跳到不同的 function</p>
+<h4 id="setjmp"><a href="#setjmp" class="headerlink" title="setjmp"></a>setjmp</h4><p>int setjmp(jmp_buf env);</p>
+<p>設定跳回的位址</p>
+<ul>
+<li>env: 通常是一個 global 變數，要可以被 setjmp 和 longjmp 兩方存取 </li>
+</ul>
+<p>如果是直接呼叫，會回傳 0；如果是自 longjmp 返回，會回傳非 0</p>
+<h4 id="longjmp"><a href="#longjmp" class="headerlink" title="longjmp"></a>longjmp</h4><p>void longjmp(jmp_buf env, int val);</p>
+<p>跳回</p>
+<ul>
+<li><p>val 是 setjmp 的返回值</p>
+</li>
+<li><p>如果 val 是 0，將會被取代為 1</p>
+</li>
+</ul>
+<h4 id="Restoration-of-Variables"><a href="#Restoration-of-Variables" class="headerlink" title="Restoration of Variables"></a>Restoration of Variables</h4><p>變數類型</p>
+<ul>
+<li><p>Automatic: the default</p>
+</li>
+<li><p>Register: store in register if possible</p>
+</li>
+<li><p>Volatile: store in memory</p>
+</li>
+</ul>
+<p>variables in register – restored; variables in memory – kept</p>
+<ul>
+<li><p>auto variables may be indeterminate, it depends on compiler<br>implementations</p>
+</li>
+<li><p>register variables are restored to the value of “before calling setjmp”</p>
+</li>
+<li><p>volatile variable are restored to the value of “before calling longjmp”</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="Process-resource-limits"><a href="#Process-resource-limits" class="headerlink" title="Process resource limits"></a>Process resource limits</h2><p>&gt;</p>
+<blockquote>
+<ul>
+<li><p>每個 process 都有 resource 限制</p>
+</li>
+<li><p>通常是由 parent process 初始化後，該 parent process 的 child process 繼承之</p>
+</li>
+<li><p>getrlimit 和 setrlimit function</p>
+</li>
+<li><p>rlimit structure</p>
+</li>
+</ul>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/11/13/VP8/" itemprop="url">
+                  VP8
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-11-13T17:02:27+08:00" content="2016-11-13">
+              2016-11-13
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><h3 id="Codec"><a href="#Codec" class="headerlink" title="Codec"></a>Codec</h3><ul>
+<li>codec 一詞來自於coder-decoder，意即編解碼器</li>
+<li>是一種會對 signal 或 data stream 做編碼或解碼動作的程式，也可以是一個 device</li>
+<li>codec 編碼的目的是為了傳輸、儲存、加密 signal 或 data stream，再藉由解碼來還原原本的 signal 或 data stream </li>
+</ul>
+<h3 id="Motion-Estimation"><a href="#Motion-Estimation" class="headerlink" title="Motion Estimation"></a>Motion Estimation</h3><p>運動向量估計是影像壓縮中是最重要也是運算量最大的部分</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/11/05/Advanced-UNIX-Programming-Ch6/" itemprop="url">
+                  Advanced UNIX Programming--Ch6
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-11-05T16:04:03+08:00" content="2016-11-05">
+              2016-11-05
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><h2 id="Password"><a href="#Password" class="headerlink" title="Password"></a>Password</h2><h2 id="Group"><a href="#Group" class="headerlink" title="Group"></a>Group</h2><h2 id="Accounting"><a href="#Accounting" class="headerlink" title="Accounting"></a>Accounting</h2><h2 id="System-Identification"><a href="#System-Identification" class="headerlink" title="System Identification"></a>System Identification</h2><h2 id="Time-and-Date-Routines"><a href="#Time-and-Date-Routines" class="headerlink" title="Time and Date Routines"></a>Time and Date Routines</h2>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/29/Advanced-UNIX-Programming-Ch4/" itemprop="url">
                   Advanced UNIX Programming--Ch4
                 </a>
@@ -576,7 +1229,7 @@ open <span class="keyword">for</span> reading OK
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">6</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>

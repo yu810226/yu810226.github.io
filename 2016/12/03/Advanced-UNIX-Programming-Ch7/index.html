@@ -1,0 +1,777 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="UNIX Programming," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Process start and terminationmain function
+Synopsisint main(int argc, char *argv[]);
+
+argc: 來自command-line 參數的數量
+
+argv: 裝著指著參數的pointer的陣列
+
+
+當C程式被 kernel 執行的時候(其實是被其中一個 exec 函式執行），在 main function 實際上被叫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Advanced-UNIX-Programming-Ch7">
+<meta property="og:url" content="http://yoursite.com/2016/12/03/Advanced-UNIX-Programming-Ch7/index.html">
+<meta property="og:site_name" content="Daily Life">
+<meta property="og:description" content="Process start and terminationmain function
+Synopsisint main(int argc, char *argv[]);
+
+argc: 來自command-line 參數的數量
+
+argv: 裝著指著參數的pointer的陣列
+
+
+當C程式被 kernel 執行的時候(其實是被其中一個 exec 函式執行），在 main function 實際上被叫">
+<meta property="og:image" content="http://yoursite.com/StartandTerminationofaCProgram.png">
+<meta property="og:image" content="http://yoursite.com/EnvironmentList.png">
+<meta property="og:image" content="http://yoursite.com/MemoryLayout.png">
+<meta property="og:updated_time" content="2016-12-03T18:06:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Advanced-UNIX-Programming-Ch7">
+<meta name="twitter:description" content="Process start and terminationmain function
+Synopsisint main(int argc, char *argv[]);
+
+argc: 來自command-line 參數的數量
+
+argv: 裝著指著參數的pointer的陣列
+
+
+當C程式被 kernel 執行的時候(其實是被其中一個 exec 函式執行），在 main function 實際上被叫">
+<meta name="twitter:image" content="http://yoursite.com/StartandTerminationofaCProgram.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/03/Advanced-UNIX-Programming-Ch7/"/>
+
+  <title> Advanced-UNIX-Programming-Ch7 | Daily Life </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Daily Life</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Advanced-UNIX-Programming-Ch7
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-12-03T18:49:04+08:00" content="2016-12-03">
+              2016-12-03
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Process-start-and-termination"><a href="#Process-start-and-termination" class="headerlink" title="Process start and termination"></a>Process start and termination</h2><h3 id="main-function"><a href="#main-function" class="headerlink" title="main function"></a>main function</h3><blockquote>
+<h4 id="Synopsis"><a href="#Synopsis" class="headerlink" title="Synopsis"></a>Synopsis</h4><p>int main(int argc, char *argv[]);</p>
+<ul>
+<li><p>argc: 來自command-line 參數的數量</p>
+</li>
+<li><p>argv: 裝著指著參數的pointer的陣列</p>
+</li>
+</ul>
+<p>當C程式被 kernel 執行的時候(其實是被其中一個 exec 函式執行），在 main function 實際上被叫起來做事前，會有一整個 start-up routine 被呼叫。<br>參考:<a href="http://www.voidcn.com/blog/vanquishedzxl/article/p-3193131.html" target="_blank" rel="external">Linux kernel 分析之二:main函数执行启动过程</a></p>
+</blockquote>
+<h3 id="Process-Termination"><a href="#Process-Termination" class="headerlink" title="Process Termination"></a>Process Termination</h3><blockquote>
+<h4 id="結束的情況有："><a href="#結束的情況有：" class="headerlink" title="結束的情況有："></a>結束的情況有：</h4><ul>
+<li><p>正常結束</p>
+<blockquote>
+<ul>
+<li>從 main return</li>
+<li>呼叫 exit</li>
+<li>呼叫 _exit 或 _Exit</li>
+<li>最後一個 thread return</li>
+<li>最後一個 thread 呼叫 pthread_exit</li>
+</ul>
+</blockquote>
+</li>
+<li><p>不正常結束</p>
+<blockquote>
+<ul>
+<li>呼叫abort</li>
+<li>收到 signal</li>
+<li>最後一個 thread cancel</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<p>上述提到的 start-up routine，當 main function return 後，會呼叫 exit 結束它（常常以assembly 寫）。</p>
+<h4 id="Exit-Functions"><a href="#Exit-Functions" class="headerlink" title="Exit Functions"></a>Exit Functions</h4><ul>
+<li><p>exit：會做清理的動作才返回 kernel，像是呼叫 fclose 關掉所有的 open stream。（這會讓所有 buffered outputdata 被寫到檔案中）</p>
+</li>
+<li><p>_exit and _Exit：直接返回 kernel</p>
+</li>
+<li><p>atexit: exit handlers</p>
+</li>
+</ul>
+<p><img src="StartandTerminationofaCProgram.png" alt="Alt text" title="Start and Termination of a C Program"></p>
+<h4 id="討論：未定義-main-function-返回-int-且未-return值的情況，會得到什麼-exit-code"><a href="#討論：未定義-main-function-返回-int-且未-return值的情況，會得到什麼-exit-code" class="headerlink" title="討論：未定義 main function 返回 int 且未 return值的情況，會得到什麼 exit code?"></a>討論：未定義 main function 返回 int 且未 return值的情況，會得到什麼 exit code?</h4><h4 id="補充：lint-指令"><a href="#補充：lint-指令" class="headerlink" title="補充：lint 指令"></a>補充：lint 指令</h4><p>標記原始碼中有疑義的部分</p>
+</blockquote>
+<h2 id="Environment-variables"><a href="#Environment-variables" class="headerlink" title="Environment variables"></a>Environment variables</h2><blockquote>
+<ul>
+<li><p>格式: name=value(＝前後皆無空白)</p>
+</li>
+<li><p>相關指令：env, export (bash)</p>
+</li>
+<li><p>在 shell 中用$來讀</p>
+</li>
+</ul>
+<h4 id="Environment-list"><a href="#Environment-list" class="headerlink" title="Environment list"></a>Environment list</h4><ul>
+<li><p>extern char **environ;</p>
+</li>
+<li><p>是一個裝著 char pointer 的陣列，其中每一個 pointer 裝著一個以 null 結尾的 C string 位址</p>
+</li>
+</ul>
+<p><img src="EnvironmentList.png" alt="Alt text" title="Environment List"></p>
+</blockquote>
+<h2 id="Memory-layout"><a href="#Memory-layout" class="headerlink" title="Memory layout"></a>Memory layout</h2><p>&gt;</p>
+<blockquote>
+<p><img src="MemoryLayout.png" alt="Alt text" title="Memory Layout of a Program"></p>
+<ul>
+<li><p>Text segment: Machine instructions</p>
+</li>
+<li><p>Initialized data segment: eg. int maxcount = 100;</p>
+</li>
+<li><p>Uninitialized data segment (bss): eg. long sum[1000];</p>
+</li>
+<li><p>Stack: Local variables, function call states</p>
+</li>
+<li><p>Heap: Dynamic allocated memory</p>
+</li>
+</ul>
+<h4 id="size-指令"><a href="#size-指令" class="headerlink" title="size 指令"></a>size 指令</h4><p>單位：byte</p>
+</blockquote>
+<h2 id="Shared-libraries"><a href="#Shared-libraries" class="headerlink" title="Shared libraries"></a>Shared libraries</h2><p>&gt;</p>
+<blockquote>
+<ul>
+<li><p>減少執行檔的 common library routine</p>
+</li>
+<li><p>Maintain 一份 library routine 在記憶體裡供所有 process reference</p>
+<blockquote>
+<p>這可能會增加一些 runtime overhead</p>
+</blockquote>
+</li>
+</ul>
+<p>程式可以使用新版的 library function 在不用 relink 到每一個用到該 libray 程式的情況下</p>
+<blockquote>
+<p>這可能會有安全性問題</p>
+</blockquote>
+<h4 id="Library-Injection"><a href="#Library-Injection" class="headerlink" title="Library Injection"></a>Library Injection</h4><ul>
+<li><p>被 shared libraries reference 的 function 可以被 overridden</p>
+</li>
+<li><p>The LD_PRELOAD environment variable </p>
+</li>
+</ul>
+<blockquote>
+<p>LD_PRELOAD=/path/to/the/injected-shared-object {program}</p>
+</blockquote>
+<ul>
+<li><p>不能和 suid/sgid 一起用</p>
+</li>
+<li><p>相關指令：file, ldd, nm, strip </p>
+</li>
+</ul>
+</blockquote>
+<h2 id="Memory-allocation"><a href="#Memory-allocation" class="headerlink" title="Memory allocation"></a>Memory allocation</h2><p>&gt;</p>
+<blockquote>
+<p>ISO C</p>
+<ul>
+<li><p>void *malloc(size_t size);</p>
+<blockquote>
+<p>初始值未定</p>
+</blockquote>
+</li>
+<li><p>void *calloc(size_t nobj, size_t size);</p>
+<blockquote>
+<p>初始值為 0</p>
+</blockquote>
+</li>
+</ul>
+<p><em>void </em>realloc(void *ptr, size_t newsize);</p>
+<blockquote>
+<p>初始值未定</p>
+</blockquote>
+<p>released by free()</p>
+<p>通常以 system call: sbrk(2) 實作</p>
+<p>以上三個記憶體皆被要在 heap，free 時記憶體並非被還給 kernel，而是保存在 malloc pool 中</p>
+<p>如果一個 process 呼叫 malloc，但沒有呼叫 free，則它的記憶體使用會繼續增長，這就稱為 leakage</p>
+<blockquote>
+<p>這可能會因過度的 paging overhead 而造成程式效能下降 </p>
+</blockquote>
+<p>#include <alloca.h></alloca.h></p>
+<ul>
+<li>void *alloca(size_t size);</li>
+</ul>
+<p>記憶體被要在stack，所以也不需在使用完後 free 掉記憶體</p>
+</blockquote>
+<h2 id="setjmp-and-longjmp"><a href="#setjmp-and-longjmp" class="headerlink" title="setjmp and longjmp"></a>setjmp and longjmp</h2><p>&gt;</p>
+<blockquote>
+<p>因為 goto 只能被用在同一個 function 中，我們必須有 setjmp 和 longjmp 來跳到不同的 function</p>
+<h4 id="setjmp"><a href="#setjmp" class="headerlink" title="setjmp"></a>setjmp</h4><p>int setjmp(jmp_buf env);</p>
+<p>設定跳回的位址</p>
+<ul>
+<li>env: 通常是一個 global 變數，要可以被 setjmp 和 longjmp 兩方存取 </li>
+</ul>
+<p>如果是直接呼叫，會回傳 0；如果是自 longjmp 返回，會回傳非 0</p>
+<h4 id="longjmp"><a href="#longjmp" class="headerlink" title="longjmp"></a>longjmp</h4><p>void longjmp(jmp_buf env, int val);</p>
+<p>跳回</p>
+<ul>
+<li><p>val 是 setjmp 的返回值</p>
+</li>
+<li><p>如果 val 是 0，將會被取代為 1</p>
+</li>
+</ul>
+<h4 id="Restoration-of-Variables"><a href="#Restoration-of-Variables" class="headerlink" title="Restoration of Variables"></a>Restoration of Variables</h4><p>變數類型</p>
+<ul>
+<li><p>Automatic: the default</p>
+</li>
+<li><p>Register: store in register if possible</p>
+</li>
+<li><p>Volatile: store in memory</p>
+</li>
+</ul>
+<p>variables in register – restored; variables in memory – kept</p>
+<ul>
+<li><p>auto variables may be indeterminate, it depends on compiler<br>implementations</p>
+</li>
+<li><p>register variables are restored to the value of “before calling setjmp”</p>
+</li>
+<li><p>volatile variable are restored to the value of “before calling longjmp”</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="Process-resource-limits"><a href="#Process-resource-limits" class="headerlink" title="Process resource limits"></a>Process resource limits</h2><p>&gt;</p>
+<blockquote>
+<ul>
+<li><p>每個 process 都有 resource 限制</p>
+</li>
+<li><p>通常是由 parent process 初始化後，該 parent process 的 child process 繼承之</p>
+</li>
+<li><p>getrlimit 和 setrlimit function</p>
+</li>
+<li><p>rlimit structure</p>
+</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/UNIX-Programming/" rel="tag">#UNIX Programming</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/13/VP8/" rel="next" title="VP8">
+                <i class="fa fa-chevron-left"></i> VP8
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/04/Advanced-UNIX-Programming-Ch8/" rel="prev" title="Advanced-UNIX-Programming-Ch8">
+                Advanced-UNIX-Programming-Ch8 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Shelly Yu" />
+          <p class="site-author-name" itemprop="name">Shelly Yu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Process-start-and-termination"><span class="nav-number">1.</span> <span class="nav-text">Process start and termination</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#main-function"><span class="nav-number">1.1.</span> <span class="nav-text">main function</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Synopsis"><span class="nav-number">1.1.1.</span> <span class="nav-text">Synopsis</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Process-Termination"><span class="nav-number">1.2.</span> <span class="nav-text">Process Termination</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#結束的情況有："><span class="nav-number">1.2.1.</span> <span class="nav-text">結束的情況有：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Exit-Functions"><span class="nav-number">1.2.2.</span> <span class="nav-text">Exit Functions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#討論：未定義-main-function-返回-int-且未-return值的情況，會得到什麼-exit-code"><span class="nav-number">1.2.3.</span> <span class="nav-text">討論：未定義 main function 返回 int 且未 return值的情況，會得到什麼 exit code?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#補充：lint-指令"><span class="nav-number">1.2.4.</span> <span class="nav-text">補充：lint 指令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Environment-variables"><span class="nav-number">2.</span> <span class="nav-text">Environment variables</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Environment-list"><span class="nav-number">2.0.1.</span> <span class="nav-text">Environment list</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory-layout"><span class="nav-number">3.</span> <span class="nav-text">Memory layout</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#size-指令"><span class="nav-number">3.0.1.</span> <span class="nav-text">size 指令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shared-libraries"><span class="nav-number">4.</span> <span class="nav-text">Shared libraries</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Library-Injection"><span class="nav-number">4.0.1.</span> <span class="nav-text">Library Injection</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory-allocation"><span class="nav-number">5.</span> <span class="nav-text">Memory allocation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setjmp-and-longjmp"><span class="nav-number">6.</span> <span class="nav-text">setjmp and longjmp</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#setjmp"><span class="nav-number">6.0.1.</span> <span class="nav-text">setjmp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#longjmp"><span class="nav-number">6.0.2.</span> <span class="nav-text">longjmp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Restoration-of-Variables"><span class="nav-number">6.0.3.</span> <span class="nav-text">Restoration of Variables</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Process-resource-limits"><span class="nav-number">7.</span> <span class="nav-text">Process resource limits</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shelly Yu</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
