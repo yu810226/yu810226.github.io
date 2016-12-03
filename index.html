@@ -452,7 +452,134 @@
 </li>
 </ul>
 </blockquote>
-<h2 id="Process-termination"><a href="#Process-termination" class="headerlink" title="Process termination"></a>Process termination</h2><h2 id="Program-execution"><a href="#Program-execution" class="headerlink" title="Program execution"></a>Program execution</h2>
+<h2 id="Process-termination"><a href="#Process-termination" class="headerlink" title="Process termination"></a>Process termination</h2><h3 id="Child-Process-Termination"><a href="#Child-Process-Termination" class="headerlink" title="Child Process Termination"></a>Child Process Termination</h3><blockquote>
+<h4 id="Zombie-process"><a href="#Zombie-process" class="headerlink" title="Zombie process"></a>Zombie process</h4><p>當 child process 結束時，它的 parent process 並未讀取它的 exit status，則此 child process 成為一個 zombie process</p>
+<blockquote>
+<p>此時 child process 佔用的資源會被釋放<br>PID 和 termination state 等資訊仍被保存在 kernel 內，這可能會影響效能，甚至在 process 數量達上限時，造成工作無法執行</p>
+</blockquote>
+<p>解決方法：保證 parent process 的存在</p>
+<blockquote>
+<p>讓 init process 變成任何 parent process 結束的 child process 的 parent<br>Calling fork Twice</p>
+</blockquote>
+<h4 id="Signal"><a href="#Signal" class="headerlink" title="Signal"></a>Signal</h4><ul>
+<li><p>不論 child process 正常或不正常結束，kernel 都會藉由傳送 SIGCHLD signal 通知 parent process</p>
+</li>
+<li><p>是 asynchronous</p>
+</li>
+<li><p>parent process 可以選擇忽略 signal 或是用 signal handler function 來處理 </p>
+</li>
+</ul>
+</blockquote>
+<h3 id="wait-and-waitpid"><a href="#wait-and-waitpid" class="headerlink" title="wait and waitpid"></a>wait and waitpid</h3><blockquote>
+<p>parent process 用 wait 和 waitpid 來接收 child process 的 termination status</p>
+<ul>
+<li><p>當 child process 還在執行時，這兩個 function 會 block</p>
+</li>
+<li><p>當 child process 結束，且等待它的 termination status 被接收，這兩個 function 會回傳 child process 的 termination status</p>
+</li>
+<li><p>當沒有任何 child process 時，會回傳錯誤</p>
+</li>
+</ul>
+<p>收到 SIGCHLD signal 時，呼叫 wait 和 waitpid 應會立即 return。</p>
+<h4 id="Synopsis-1"><a href="#Synopsis-1" class="headerlink" title="Synopsis"></a>Synopsis</h4><ul>
+<li><p>pid_t wait(int *status);</p>
+</li>
+<li><p>pid_t waitpid(pid_t pid, int *status, int opIons);</p>
+</li>
+</ul>
+<h4 id="Difference-between-wait-and-waitpid"><a href="#Difference-between-wait-and-waitpid" class="headerlink" title="Difference between wait and waitpid"></a>Difference between wait and waitpid</h4><ul>
+<li><p>Block or not block</p>
+<blockquote>
+<p>The wait funcIon always block the caller unIl a child process terminates<br>The waitpid funcIon has an opIon that prevents it from being blocked</p>
+</blockquote>
+</li>
+<li><p>Process terminaIon order</p>
+<blockquote>
+<p>The waitpid funcIon does not wait for the child that terminates first; it has a number of opIons that control which process it waits for</p>
+</blockquote>
+</li>
+<li><p>any of the children or the child</p>
+<blockquote>
+<p>The wait function waits for any of the children<br>If we want to wait for a specific process to terminate, use waitpid instead</p>
+<ul>
+<li>If pid == -1, waitpid is equivalent to wait</li>
+<li>If pid == 0, waitpid waits for any child whose process group ID equals that of the calling process</li>
+<li>If pid &lt; -1, waitpid waits for any child whose process group ID equals the absolute value of pid</li>
+<li>If pid &gt; 0, waitpid waits for the child whose process ID equals pid</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h4 id="waitpid-Options"><a href="#waitpid-Options" class="headerlink" title="waitpid Options"></a>waitpid Options</h4><ul>
+<li><p>WNOHANG: 不等 child process，立刻返回，之後 parent process 可另外用 while 輪詢 child process </p>
+</li>
+<li><p>WUNTRACED: 如果 child process 暫停執行，parent process 碼上返回, child process 的暫停狀態存於 status 變數，用 WIFSTOPPED 判斷</p>
+</li>
+<li><p>WCONTINUED: 如果暫停執行的 child process 收到 SIGCONT signal，return </p>
+</li>
+</ul>
+</blockquote>
+<h3 id="Race-CondiIons"><a href="#Race-CondiIons" class="headerlink" title="Race CondiIons"></a>Race CondiIons</h3><blockquote>
+<p>fork funcIon create a process, but it does not guarantee which process, the parent or the child, runs first</p>
+<h4 id="Solution-1-Polling"><a href="#Solution-1-Polling" class="headerlink" title="Solution 1: Polling"></a>Solution 1: Polling</h4><ul>
+<li><p>If the parent waits unIl a child terminates</p>
+<blockquote>
+<p>Use wait or waitpid to block the parent process<br>Make sure that the child runs first</p>
+</blockquote>
+</li>
+<li><p>If a child waits until its parent terminates</p>
+<blockquote>
+<p>When its parent terminates, init will be the new parent, which has a PID of 1<br>Use getppid funcIon to check the value of ppid periodically</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; <span class="keyword">while</span> (getppid() != 1) sleep(1);</div><div class="line">&gt;&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<ul>
+<li>Problem<blockquote>
+<p>Either the parent or the child has to terminate first<br>Polling is not efficient</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="Solution-2-Communicate-via-interprocess-communications-IPC"><a href="#Solution-2-Communicate-via-interprocess-communications-IPC" class="headerlink" title="Solution 2: Communicate via interprocess communications (IPC)"></a>Solution 2: Communicate via interprocess communications (IPC)</h4></blockquote>
+<h2 id="Program-execution"><a href="#Program-execution" class="headerlink" title="Program execution"></a>Program execution</h2><h3 id="How-UNIX-Recognizes-Binaries"><a href="#How-UNIX-Recognizes-Binaries" class="headerlink" title="How UNIX Recognizes Binaries?"></a>How UNIX Recognizes Binaries?</h3><blockquote>
+<p>Checking file content</p>
+<h4 id="ELF"><a href="#ELF" class="headerlink" title="ELF"></a>ELF</h4><p>Executable and Linking Format，是 UNIX/Linux 系統中的目的檔格式</p>
+<p><a href="http://sp1.wikidot.com/elfobjfile" target="_blank" rel="external">ELF</a> </p>
+<h4 id="Interpreter-Files-Scripts"><a href="#Interpreter-Files-Scripts" class="headerlink" title="Interpreter Files (Scripts)"></a>Interpreter Files (Scripts)</h4><p>These files are text files that begin with a line of the form</p>
+<ul>
+<li><p>#! pathname [opIonal-argument], e.g. #!/bin/sh</p>
+</li>
+<li><p>can be also executed by exec functions</p>
+</li>
+</ul>
+<h4 id="binfmt-misc"><a href="#binfmt-misc" class="headerlink" title="binfmt_misc"></a>binfmt_misc</h4><p>Linux 提供支援額外的執行檔格式的方法</p>
+<p>More Info: <a href="http://coldnew.github.io/blog/2013/03-20_17398/" target="_blank" rel="external">透過 binfmt_misc 讓 Linux 可以執行不同格式的執行檔</a></p>
+<p><a href="hVps://www.kernel.org/doc/DocumentaIon/binfmt_misc.txt" target="_blank" rel="external">document</a></p>
+</blockquote>
+<h3 id="exec-Functions"><a href="#exec-Functions" class="headerlink" title="exec Functions"></a>exec Functions</h3><blockquote>
+<p>Replace the calling process with a new program</p>
+<p>The new program starts execuIng at its main function</p>
+<h4 id="Differences-Among-the-Six-exec-Functions"><a href="#Differences-Among-the-Six-exec-Functions" class="headerlink" title="Differences Among the Six exec Functions"></a>Differences Among the Six exec Functions</h4><img src="/2016/12/04/Advanced-UNIX-Programming-Ch8/SixexecFunctions.png" alt="Six exec Functions" title="Six exec Functions">
+<img src="/2016/12/04/Advanced-UNIX-Programming-Ch8/RelationshipoftheSixexec.png" alt="Relationship of the Six exec" title="Relationship of the Six exec">
+<ul>
+<li>pathname: must be absolute or relaIve paths</li>
+</ul>
+<p>*filename: does not contain a slash (/), filename will be searched in directories listed in the PATH variable</p>
+<p>More Info: <a href="http://sodino.com/2015/04/08/c-exec-family/" target="_blank" rel="external">exec family</a></p>
+</blockquote>
+<h3 id="system-Function"><a href="#system-Function" class="headerlink" title="system Function"></a>system Function</h3><p>&gt;</p>
+<blockquote>
+<ul>
+<li>It might become a security problem if a suid/sgid program calls the system function<blockquote>
+<p>If a suid/sgid program use the system function to execute a command, the executed command has the same euid/egid as the calling process</p>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+
           
         
       
