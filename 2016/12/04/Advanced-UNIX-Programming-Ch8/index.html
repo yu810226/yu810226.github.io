@@ -100,7 +100,8 @@
 
 
 是一個非負的整數在一個 process 結束後，process ID 可以被重複使用Process ID 0 一般是 scheduler process ，又稱為 swapper （是 kernel 的一部分，是 system process）Process ID 1 一般是 init proc">
-<meta property="og:updated_time" content="2016-12-03T18:21:15.000Z">
+<meta property="og:image" content="http://yoursite.com/2016/12/04/Advanced-UNIX-Programming-Ch8/forkandFileSharing.png">
+<meta property="og:updated_time" content="2016-12-03T18:29:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Advanced-UNIX-Programming-Ch8">
 <meta name="twitter:description" content="OverviewProcess IdenIfiers
@@ -109,6 +110,7 @@
 
 
 是一個非負的整數在一個 process 結束後，process ID 可以被重複使用Process ID 0 一般是 scheduler process ，又稱為 swapper （是 kernel 的一部分，是 system process）Process ID 1 一般是 init proc">
+<meta name="twitter:image" content="http://yoursite.com/2016/12/04/Advanced-UNIX-Programming-Ch8/forkandFileSharing.png">
 
 
 
@@ -337,7 +339,7 @@
 <li><p>因為 fork function 之後常會跟著呼叫 exec，copy-on- write (COW) 技術因此出現：當記憶體被複製但未被改變，則不必要 allocate 新的記憶體</p>
 </li>
 </ul>
-<h4 id="fork-and-File-Sharing"><a href="#fork-and-File-Sharing" class="headerlink" title="fork and File Sharing"></a>fork and File Sharing</h4>
+<h4 id="fork-and-File-Sharing"><a href="#fork-and-File-Sharing" class="headerlink" title="fork and File Sharing"></a>fork and File Sharing</h4><img src="/2016/12/04/Advanced-UNIX-Programming-Ch8/forkandFileSharing.png" alt="fork and File Sharing" title="fork and File Sharing">
 <h4 id="Uses-of-fork"><a href="#Uses-of-fork" class="headerlink" title="Uses of fork"></a>Uses of fork</h4><ul>
 <li><p>When a process wants to duplicate itself</p>
 <blockquote>
@@ -410,6 +412,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2016/12/04/Advanced-UNIX-Programming-Ch9/" rel="prev" title="Advanced-UNIX-Programming-Ch9">
+                Advanced-UNIX-Programming-Ch9 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -476,7 +482,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>

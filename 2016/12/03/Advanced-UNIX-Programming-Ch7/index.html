@@ -106,7 +106,10 @@ argv: 裝著指著參數的pointer的陣列
 
 
 當C程式被 kernel 執行的時候(其實是被其中一個 exec 函式執行），在 main function 實際上被叫">
-<meta property="og:updated_time" content="2016-12-03T18:21:02.000Z">
+<meta property="og:image" content="http://yoursite.com/2016/12/03/Advanced-UNIX-Programming-Ch7/StartandTerminationofaCProgram.png">
+<meta property="og:image" content="http://yoursite.com/2016/12/03/Advanced-UNIX-Programming-Ch7/EnvironmentList.png">
+<meta property="og:image" content="http://yoursite.com/2016/12/03/Advanced-UNIX-Programming-Ch7/MemoryLayout.png">
+<meta property="og:updated_time" content="2016-12-03T18:29:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Advanced-UNIX-Programming-Ch7">
 <meta name="twitter:description" content="Process start and terminationmain function
@@ -118,6 +121,7 @@ argv: 裝著指著參數的pointer的陣列
 
 
 當C程式被 kernel 執行的時候(其實是被其中一個 exec 函式執行），在 main function 實際上被叫">
+<meta name="twitter:image" content="http://yoursite.com/2016/12/03/Advanced-UNIX-Programming-Ch7/StartandTerminationofaCProgram.png">
 
 
 
@@ -342,7 +346,7 @@ argv: 裝著指著參數的pointer的陣列
 <li><p>atexit: exit handlers</p>
 </li>
 </ul>
-
+<img src="/2016/12/03/Advanced-UNIX-Programming-Ch7/StartandTerminationofaCProgram.png" alt="Start and Termination of a C Program" title="Start and Termination of a C Program">
 <h4 id="討論：未定義-main-function-返回-int-且未-return值的情況，會得到什麼-exit-code"><a href="#討論：未定義-main-function-返回-int-且未-return值的情況，會得到什麼-exit-code" class="headerlink" title="討論：未定義 main function 返回 int 且未 return值的情況，會得到什麼 exit code?"></a>討論：未定義 main function 返回 int 且未 return值的情況，會得到什麼 exit code?</h4><h4 id="補充：lint-指令"><a href="#補充：lint-指令" class="headerlink" title="補充：lint 指令"></a>補充：lint 指令</h4><p>標記原始碼中有疑義的部分</p>
 </blockquote>
 <h2 id="Environment-variables"><a href="#Environment-variables" class="headerlink" title="Environment variables"></a>Environment variables</h2><blockquote>
@@ -360,10 +364,10 @@ argv: 裝著指著參數的pointer的陣列
 <li><p>是一個裝著 char pointer 的陣列，其中每一個 pointer 裝著一個以 null 結尾的 C string 位址</p>
 </li>
 </ul>
-
+<img src="/2016/12/03/Advanced-UNIX-Programming-Ch7/EnvironmentList.png" alt="Environment List" title="Environment List">
 </blockquote>
 <h2 id="Memory-layout"><a href="#Memory-layout" class="headerlink" title="Memory layout"></a>Memory layout</h2><blockquote>
-
+<img src="/2016/12/03/Advanced-UNIX-Programming-Ch7/MemoryLayout.png" alt="Memory Layout of a Program" title="Memory Layout of a Program">
 <ul>
 <li><p>Text segment: Machine instructions</p>
 </li>
@@ -595,7 +599,7 @@ argv: 裝著指著參數的pointer的陣列
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
