@@ -307,8 +307,7 @@
 <h4 id="取得-process-ID-的-function"><a href="#取得-process-ID-的-function" class="headerlink" title="取得 process ID 的 function"></a>取得 process ID 的 function</h4><p>getpid, getppid, getuid, geteuid, getgid, getegid</p>
 <p>要注意的是上述 function 都不會回傳錯誤</p>
 </blockquote>
-<h2 id="Process-creation"><a href="#Process-creation" class="headerlink" title="Process creation"></a>Process creation</h2><h3 id="fork"><a href="#fork" class="headerlink" title="fork"></a>fork</h3><p>&gt;</p>
-<blockquote>
+<h2 id="Process-creation"><a href="#Process-creation" class="headerlink" title="Process creation"></a>Process creation</h2><h3 id="fork"><a href="#fork" class="headerlink" title="fork"></a>fork</h3><blockquote>
 <p>創建一個新的（child）process</p>
 <h4 id="Synopsis"><a href="#Synopsis" class="headerlink" title="Synopsis"></a>Synopsis</h4><ul>
 <li><p>pid_t fork(void);</p>
@@ -340,8 +339,7 @@
 </li>
 </ul>
 </blockquote>
-<h3 id="Variants-of-fork"><a href="#Variants-of-fork" class="headerlink" title="Variants of fork"></a>Variants of fork</h3><p>&gt;</p>
-<blockquote>
+<h3 id="Variants-of-fork"><a href="#Variants-of-fork" class="headerlink" title="Variants of fork"></a>Variants of fork</h3><blockquote>
 <h4 id="vfork"><a href="#vfork" class="headerlink" title="vfork"></a>vfork</h4><ul>
 <li><p>Creates a child process of the calling process without copying the address space of the parent into the child</p>
 </li>
@@ -361,9 +359,7 @@
 </li>
 </ul>
 </blockquote>
-<h2 id="Process-termination"><a href="#Process-termination" class="headerlink" title="Process termination"></a>Process termination</h2><p>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;</p>
-<h2 id="Program-execution"><a href="#Program-execution" class="headerlink" title="Program execution"></a>Program execution</h2><p>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;</p>
-
+<h2 id="Process-termination"><a href="#Process-termination" class="headerlink" title="Process termination"></a>Process termination</h2><h2 id="Program-execution"><a href="#Program-execution" class="headerlink" title="Program execution"></a>Program execution</h2>
           
         
       
@@ -518,8 +514,7 @@
 </ul>
 <p><img src="EnvironmentList.png" alt="Alt text" title="Environment List"></p>
 </blockquote>
-<h2 id="Memory-layout"><a href="#Memory-layout" class="headerlink" title="Memory layout"></a>Memory layout</h2><p>&gt;</p>
-<blockquote>
+<h2 id="Memory-layout"><a href="#Memory-layout" class="headerlink" title="Memory layout"></a>Memory layout</h2><blockquote>
 <p><img src="MemoryLayout.png" alt="Alt text" title="Memory Layout of a Program"></p>
 <ul>
 <li><p>Text segment: Machine instructions</p>
@@ -535,8 +530,7 @@
 </ul>
 <h4 id="size-指令"><a href="#size-指令" class="headerlink" title="size 指令"></a>size 指令</h4><p>單位：byte</p>
 </blockquote>
-<h2 id="Shared-libraries"><a href="#Shared-libraries" class="headerlink" title="Shared libraries"></a>Shared libraries</h2><p>&gt;</p>
-<blockquote>
+<h2 id="Shared-libraries"><a href="#Shared-libraries" class="headerlink" title="Shared libraries"></a>Shared libraries</h2><blockquote>
 <ul>
 <li><p>減少執行檔的 common library routine</p>
 </li>
@@ -566,8 +560,7 @@
 </li>
 </ul>
 </blockquote>
-<h2 id="Memory-allocation"><a href="#Memory-allocation" class="headerlink" title="Memory allocation"></a>Memory allocation</h2><p>&gt;</p>
-<blockquote>
+<h2 id="Memory-allocation"><a href="#Memory-allocation" class="headerlink" title="Memory allocation"></a>Memory allocation</h2><blockquote>
 <p>ISO C</p>
 <ul>
 <li><p>void *malloc(size_t size);</p>
@@ -598,8 +591,7 @@
 </ul>
 <p>記憶體被要在stack，所以也不需在使用完後 free 掉記憶體</p>
 </blockquote>
-<h2 id="setjmp-and-longjmp"><a href="#setjmp-and-longjmp" class="headerlink" title="setjmp and longjmp"></a>setjmp and longjmp</h2><p>&gt;</p>
-<blockquote>
+<h2 id="setjmp-and-longjmp"><a href="#setjmp-and-longjmp" class="headerlink" title="setjmp and longjmp"></a>setjmp and longjmp</h2><blockquote>
 <p>因為 goto 只能被用在同一個 function 中，我們必須有 setjmp 和 longjmp 來跳到不同的 function</p>
 <h4 id="setjmp"><a href="#setjmp" class="headerlink" title="setjmp"></a>setjmp</h4><p>int setjmp(jmp_buf env);</p>
 <p>設定跳回的位址</p>
@@ -634,8 +626,7 @@
 </li>
 </ul>
 </blockquote>
-<h2 id="Process-resource-limits"><a href="#Process-resource-limits" class="headerlink" title="Process resource limits"></a>Process resource limits</h2><p>&gt;</p>
-<blockquote>
+<h2 id="Process-resource-limits"><a href="#Process-resource-limits" class="headerlink" title="Process resource limits"></a>Process resource limits</h2><blockquote>
 <ul>
 <li><p>每個 process 都有 resource 限制</p>
 </li>

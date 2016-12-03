@@ -109,7 +109,7 @@ argv: 裝著指著參數的pointer的陣列
 <meta property="og:image" content="http://yoursite.com/StartandTerminationofaCProgram.png">
 <meta property="og:image" content="http://yoursite.com/EnvironmentList.png">
 <meta property="og:image" content="http://yoursite.com/MemoryLayout.png">
-<meta property="og:updated_time" content="2016-12-03T18:06:47.000Z">
+<meta property="og:updated_time" content="2016-12-03T18:10:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Advanced-UNIX-Programming-Ch7">
 <meta name="twitter:description" content="Process start and terminationmain function
@@ -366,8 +366,7 @@ argv: 裝著指著參數的pointer的陣列
 </ul>
 <p><img src="EnvironmentList.png" alt="Alt text" title="Environment List"></p>
 </blockquote>
-<h2 id="Memory-layout"><a href="#Memory-layout" class="headerlink" title="Memory layout"></a>Memory layout</h2><p>&gt;</p>
-<blockquote>
+<h2 id="Memory-layout"><a href="#Memory-layout" class="headerlink" title="Memory layout"></a>Memory layout</h2><blockquote>
 <p><img src="MemoryLayout.png" alt="Alt text" title="Memory Layout of a Program"></p>
 <ul>
 <li><p>Text segment: Machine instructions</p>
@@ -383,8 +382,7 @@ argv: 裝著指著參數的pointer的陣列
 </ul>
 <h4 id="size-指令"><a href="#size-指令" class="headerlink" title="size 指令"></a>size 指令</h4><p>單位：byte</p>
 </blockquote>
-<h2 id="Shared-libraries"><a href="#Shared-libraries" class="headerlink" title="Shared libraries"></a>Shared libraries</h2><p>&gt;</p>
-<blockquote>
+<h2 id="Shared-libraries"><a href="#Shared-libraries" class="headerlink" title="Shared libraries"></a>Shared libraries</h2><blockquote>
 <ul>
 <li><p>減少執行檔的 common library routine</p>
 </li>
@@ -414,8 +412,7 @@ argv: 裝著指著參數的pointer的陣列
 </li>
 </ul>
 </blockquote>
-<h2 id="Memory-allocation"><a href="#Memory-allocation" class="headerlink" title="Memory allocation"></a>Memory allocation</h2><p>&gt;</p>
-<blockquote>
+<h2 id="Memory-allocation"><a href="#Memory-allocation" class="headerlink" title="Memory allocation"></a>Memory allocation</h2><blockquote>
 <p>ISO C</p>
 <ul>
 <li><p>void *malloc(size_t size);</p>
@@ -446,8 +443,7 @@ argv: 裝著指著參數的pointer的陣列
 </ul>
 <p>記憶體被要在stack，所以也不需在使用完後 free 掉記憶體</p>
 </blockquote>
-<h2 id="setjmp-and-longjmp"><a href="#setjmp-and-longjmp" class="headerlink" title="setjmp and longjmp"></a>setjmp and longjmp</h2><p>&gt;</p>
-<blockquote>
+<h2 id="setjmp-and-longjmp"><a href="#setjmp-and-longjmp" class="headerlink" title="setjmp and longjmp"></a>setjmp and longjmp</h2><blockquote>
 <p>因為 goto 只能被用在同一個 function 中，我們必須有 setjmp 和 longjmp 來跳到不同的 function</p>
 <h4 id="setjmp"><a href="#setjmp" class="headerlink" title="setjmp"></a>setjmp</h4><p>int setjmp(jmp_buf env);</p>
 <p>設定跳回的位址</p>
@@ -482,8 +478,7 @@ argv: 裝著指著參數的pointer的陣列
 </li>
 </ul>
 </blockquote>
-<h2 id="Process-resource-limits"><a href="#Process-resource-limits" class="headerlink" title="Process resource limits"></a>Process resource limits</h2><p>&gt;</p>
-<blockquote>
+<h2 id="Process-resource-limits"><a href="#Process-resource-limits" class="headerlink" title="Process resource limits"></a>Process resource limits</h2><blockquote>
 <ul>
 <li><p>每個 process 都有 resource 限制</p>
 </li>

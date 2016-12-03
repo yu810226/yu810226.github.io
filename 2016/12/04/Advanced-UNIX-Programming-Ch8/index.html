@@ -101,7 +101,7 @@
 
 是一個非負的整數在一個 process 結束後，process ID 可以被重複使用Process ID 0 一般是 scheduler process ，又稱為 swapper （是 kernel 的一部分，是 system process）Process ID 1 一般是 init proc">
 <meta property="og:image" content="http://yoursite.com/forkandFileSharing.png">
-<meta property="og:updated_time" content="2016-12-03T18:06:46.000Z">
+<meta property="og:updated_time" content="2016-12-03T18:11:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Advanced-UNIX-Programming-Ch8">
 <meta name="twitter:description" content="OverviewProcess IdenIfiers
@@ -321,8 +321,7 @@
 <h4 id="取得-process-ID-的-function"><a href="#取得-process-ID-的-function" class="headerlink" title="取得 process ID 的 function"></a>取得 process ID 的 function</h4><p>getpid, getppid, getuid, geteuid, getgid, getegid</p>
 <p>要注意的是上述 function 都不會回傳錯誤</p>
 </blockquote>
-<h2 id="Process-creation"><a href="#Process-creation" class="headerlink" title="Process creation"></a>Process creation</h2><h3 id="fork"><a href="#fork" class="headerlink" title="fork"></a>fork</h3><p>&gt;</p>
-<blockquote>
+<h2 id="Process-creation"><a href="#Process-creation" class="headerlink" title="Process creation"></a>Process creation</h2><h3 id="fork"><a href="#fork" class="headerlink" title="fork"></a>fork</h3><blockquote>
 <p>創建一個新的（child）process</p>
 <h4 id="Synopsis"><a href="#Synopsis" class="headerlink" title="Synopsis"></a>Synopsis</h4><ul>
 <li><p>pid_t fork(void);</p>
@@ -354,8 +353,7 @@
 </li>
 </ul>
 </blockquote>
-<h3 id="Variants-of-fork"><a href="#Variants-of-fork" class="headerlink" title="Variants of fork"></a>Variants of fork</h3><p>&gt;</p>
-<blockquote>
+<h3 id="Variants-of-fork"><a href="#Variants-of-fork" class="headerlink" title="Variants of fork"></a>Variants of fork</h3><blockquote>
 <h4 id="vfork"><a href="#vfork" class="headerlink" title="vfork"></a>vfork</h4><ul>
 <li><p>Creates a child process of the calling process without copying the address space of the parent into the child</p>
 </li>
@@ -375,9 +373,7 @@
 </li>
 </ul>
 </blockquote>
-<h2 id="Process-termination"><a href="#Process-termination" class="headerlink" title="Process termination"></a>Process termination</h2><p>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;</p>
-<h2 id="Program-execution"><a href="#Program-execution" class="headerlink" title="Program execution"></a>Program execution</h2><p>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;<br>&gt;</p>
-
+<h2 id="Process-termination"><a href="#Process-termination" class="headerlink" title="Process termination"></a>Process termination</h2><h2 id="Program-execution"><a href="#Program-execution" class="headerlink" title="Program execution"></a>Program execution</h2>
       
     </div>
 
